@@ -1,0 +1,43 @@
+
+
+    .box {
+        position: relative;
+        background: #CCC;
+        width: 250px;
+    }
+
+        .box .small {
+            position: relative;
+            text-align: center;
+            background: #FFF;
+        }
+
+            .box .small .mark {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 2;
+                width: 100px;
+                height: 100px;
+                background: #FFFFFF;
+                filter: alpha(opacity:50);
+                opacity: 0.5;
+                border: 1px solid #333;
+                display: none;
+            }
+
+        .box .big {
+            position: absolute;
+            left: 225px;
+            top: 0;
+            display: none;
+        }
+
+    .boxbig {
+        position: absolute;
+        left: -320px;
+        top: 0;
+        width: 300px;
+        height: 300px;
+        overflow: hidden;
+    }

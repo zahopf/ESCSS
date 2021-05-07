@@ -1,0 +1,72 @@
+﻿@using ESCS.Web.Apps
+@model IList<ESCS.Domain.Bill>
+
+@{
+    ViewBag.Title = "收支管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+
+
+<div class="demoTable">
+    @using (Html.BeginForm())
+    {
+        <span onclick="load()">备注: </span>
+        <div class="layui-inline">
+            <input class="layui-input" name="Remarks" id="demoReload">
+        </div>
+        <button class="layui-btn" data-type="reload" type="submit">搜索</button>
+    }
+</div>
+<div>
+    <table lay-filter="demo" id="demo1">
+        <thead>
+            <tr>
+                <th lay-data="{field:'time',align:'center'}">
+                    时间
+                </th>
+                <th lay-data="{field:'id',align:'center'}">
+                    备注
+                </th>
+                <th lay-data="{field:'username',align:'center'}">
+                    金额
+                </th>
+                <th lay-data="{field:'experience', sort:true,align:'center'}">
+                    公司账目余额
+                </th>
+                <th lay-data="{field:'q', align:'center'}">
+                    操作人
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Time)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Remarks)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Money)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Balance)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserId.UserName)
+                        </td>
+                   </tr>
+                }
+        </tbody>
+
+
+
+    </table>
+
+</div>
+
+

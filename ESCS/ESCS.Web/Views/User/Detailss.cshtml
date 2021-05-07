@@ -1,0 +1,68 @@
+﻿
+@{
+    Layout = null;
+    var roleList = ViewBag.RoleList as IList<ESCS.Domain.Role>;
+}
+@{
+    ViewBag.Title = "EditloginUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Detailss</title>
+    <link href="~/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/Modal/jquery.simplemodal.js"></script>
+    <script src="~/Scripts/Modal/basic.js"></script>
+</head>
+<body>
+    <div style="position: absolute; left: 45%; top: 350px; transform: translate(-50%,-50%); width: 25%; height: auto;  padding: 20px 70px 30px 0; position: relative;">
+        <label>角色</label>
+        <form class="layui-form" action="">
+            @foreach (var item in roleList)
+            {
+                <input type="checkbox" name="" title=@item.RoleName value=@item.ID lay-skin="primary">
+            }
+        </form>
+        @using (Html.BeginForm())
+        {
+            <input name="id" value=@ViewBag.Id type="hidden" />
+            <input id="Roleid" value="" name="Roleid" type="hidden" />
+            <input id="Roleids" class="layui-btn layui-btn-radius" value="保  存" name="Roleids" type="submit" />
+        }
+    </div>
+    
+
+    <script src="~/layui-v2.5.7/layui/layui.js"></script>
+    <script>
+        //JavaScript代码区域
+        layui.use('element', function () {
+            var element = layui.element;
+
+        });
+
+        //表单元素*************************************
+        layui.use('form', function () {
+            var form = layui.form;
+
+            $('#Roleids').on('click', function () {
+                //将页面全部复选框选中的值拼接到一个数组中
+                var arr_box = [];
+                $('input[type=checkbox]:checked').each(function () {
+                    arr_box.push($(this).val());
+                });
+                $("#Roleid").val(arr_box);
+                if ($("#Roleid").val() == null || $("#Roleid").val() == "") {
+                    alert("请选择角色！！！！")
+                }
+                //alert(arr_box)
+
+            });
+        });
+    </script>
+
+</body>
+</html>

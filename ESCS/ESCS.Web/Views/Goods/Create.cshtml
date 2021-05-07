@@ -1,0 +1,84 @@
+﻿@model ESCS.Domain.Goods
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var kindList = ViewBag.kindList as IList<ESCS.Domain.GoodsKind>;
+}
+<h4>创建用户</h4>
+<hr />
+<div style="position: absolute; left: 48%; top:80px; transform: translate(-50%,-50%); width: 50%; height: auto;  padding: 20px 70px 30px 0; position: relative;">
+    <label>分类</label>
+    <hr />
+    <form class="layui-form" action="">
+        @foreach (var item in kindList)
+{
+    <input type="radio" name="KindName" value=@item.ID title=@item.KindName checked lay-filter="ChoiceRadio">
+}
+    </form>
+</div>
+@using (Html.BeginForm())
+{
+
+    <div class="form-horizontal" style="position: relative;">
+        <form class="layui-form" action="">
+            <div style="position: absolute; left: 45%; top: 330px; transform: translate(-50%,-50%); width: 25%; height: auto;  padding: 20px 70px 30px 0; position: relative;">
+                <div style="width: 100px; height: 90px; position: absolute; left: 50%; top: -80px; transform: translate(-50%,-50%);  ">
+                    <div style="border: 1px solid #ffffff; padding: 5px 5px 5px 5px; width: 89px; height: 80px; background-image: url(../Models/Addpicture.png); background-size: 100% 100%;">
+                        <img class="layui-upload-img" id="demo1" style="width: 100%; height: 100%;">
+                    </div>
+                    <div class="layui-upload" style="margin-top:5px;">
+                        <button type="button" class="layui-btn" id="test1">上传图片</button>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品名</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="GoodsName" name="GoodsName" data-val="true" placeholder="请输入" autocomplete="off" class="layui-input" value=@Model.GoodsName>
+                        @Html.ValidationMessageFor(model => model.GoodsName)
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">折扣</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Discount" placeholder="请输入" autocomplete="off" class="layui-input" value="1">@Html.ValidationMessageFor(model => model.Discount)
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">进价</label>
+                    <div class="layui-input-block">
+                        <input type="number" name="InnPrice" placeholder="请输入" autocomplete="off" class="layui-input" value=@Model.InnPrice>@Html.ValidationMessageFor(model => model.InnPrice)
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">售价</label>
+                    <div class="layui-input-block">
+                        <input type="number" name="OutPrice" placeholder="请输入" autocomplete="off" class="layui-input" value=@Model.OutPrice>@Html.ValidationMessageFor(model => model.OutPrice)
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">库存</label>
+                    <div class="layui-input-block">
+                        <input type="number" name="Stock" placeholder="请输入" autocomplete="off" class="layui-input" value=@Model.Stock>@Html.ValidationMessageFor(model => model.Stock)
+                    </div>
+
+                </div>
+                <div style="padding-left:50%;margin-top:50px;">
+                    <input id="KindName" value="" name="KindName" type="hidden" />
+                    <input id="KindNames" class="layui-btn layui-btn-radius" value="保  存" name="Roleids" type="submit" />
+                </div>
+            </div>
+        </form>
+
+    </div>
+}
+<script>
+    $('#KindNames').on('click', function () {
+        //alert($('input[name="KindName"]:checked').val());
+
+        $("#KindName").val($('input[name="KindName"]:checked').val());
+        //alert(arr_box)
+
+
+    });
+</script>

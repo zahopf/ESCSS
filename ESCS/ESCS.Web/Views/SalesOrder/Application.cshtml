@@ -1,0 +1,85 @@
+﻿@model IList<ESCS.Domain.SalesOrder>
+
+@{
+    ViewBag.Title = "用户管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/layui-v2.5.7/layui/layui.js"></script>
+<h4>待分配送货单</h4>
+<hr />
+<div>
+    <table lay-filter="demo" id="demo1" lay-data="{initSort:{field:'id', type:'null'}}">
+        <thead>
+            <tr>
+                <th lay-data="{field:'Id', width:100,align:'center'}">
+                    序号
+                </th>
+                <th lay-data="{field:'q', width:100,align:'center'}">
+                    客户
+                </th>
+                <th lay-data="{field:'a', width:200,align:'center'}">
+                    下单时间
+                </th>
+                <th lay-data="{field:'s', width:100,align:'center'}">
+                    数量
+                </th>
+                <th lay-data="{field:'d', width:200,align:'center'}">
+                    金额
+                </th>
+                <th lay-data="{field:'f', width:100,align:'center'}">
+                    状态
+                </th>
+
+                <th lay-data="{field:'h', width:100,align:'center'}">
+                    备注
+                </th>
+                <th lay-data="{field:'l',align:'center'}">
+                    操作
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerId.CustomerName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Time)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Money)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Remarks)
+                        </td>
+
+                        <td>
+                            <div class="layui-btn-group">
+                                @Html.ActionLink("申请", "Applicationing", new { id = item.ID }, new { onclick = "return confirm('真的打算申请吗?')", @class = "layui-btn" })
+                            </div>
+                        </td>
+                    </tr>
+                }
+        </tbody>
+    </table>
+
+</div>
+
+

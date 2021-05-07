@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+
+
+<root>
+    <element Id="IUserService" Service="ESCS.Service.IUserService, ESCS.Service" Class="ESCS.Component.UserComponent, ESCS.Component"></element>
+
+    <element Id="ISystemFunctionService" Service="ESCS.Service.ISystemFunctionService, ESCS.Service" Class="ESCS.Component.SystemFunctionComponent, ESCS.Component"></element>
+
+    <element Id="IRoleService" Service="ESCS.Service.IRoleService, ESCS.Service" Class="ESCS.Component.RoleComponent, ESCS.Component"></element>
+
+    <element Id="ICustomerService" Service="ESCS.Service.ICustomerService, ESCS.Service" Class="ESCS.Component.CustomerComponent, ESCS.Component"></element>
+
+    <element Id="IGoodsService" Service="ESCS.Service.IGoodsService, ESCS.Service" Class="ESCS.Component.GoodsComponent, ESCS.Component"></element>
+
+    <element Id="IGoodsKindService" Service="ESCS.Service.IGoodsKindService, ESCS.Service" Class="ESCS.Component.GoodsKindComponent, ESCS.Component"></element>
+
+    <element Id="IPurchaseOrderDetailsService" Service="ESCS.Service.IPurchaseOrderDetailsService, ESCS.Service" Class="ESCS.Component.PurchaseOrderDetailsComponent, ESCS.Component"></element>
+
+    <element Id="IPurchaseOrderService" Service="ESCS.Service.IPurchaseOrderService, ESCS.Service" Class="ESCS.Component.PurchaseOrderComponent, ESCS.Component"></element>
+
+    <element Id="ISalesOrderService" Service="ESCS.Service.ISalesOrderService, ESCS.Service" Class="ESCS.Component.SalesOrderComponent, ESCS.Component"></element>
+
+    <element Id="ISalesOrderDetailsService" Service="ESCS.Service.ISalesOrderDetailsService, ESCS.Service" Class="ESCS.Component.SalesOrderDetailsComponent, ESCS.Component"></element>
+
+    <element Id="IShoppingCartService" Service="ESCS.Service.IShoppingCartService, ESCS.Service" Class="ESCS.Component.ShoppingCartComponent, ESCS.Component"></element>
+
+    <element Id="IBillService" Service="ESCS.Service.IBillService, ESCS.Service" Class="ESCS.Component.BillComponent, ESCS.Component"></element>
+
+    <element Id="IAddressService" Service="ESCS.Service.IAddressService, ESCS.Service" Class="ESCS.Component.AddressComponent, ESCS.Component"></element>
+</root>

@@ -1,0 +1,82 @@
+﻿
+@model ESCS.Domain.User
+
+@{
+    ViewBag.Title = "EditloginUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+<script src="~/layui-v2.5.7/layui/layui.js"></script>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal" style="position: relative;">
+        <h4>个人信息修改</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ID)
+        <form class="layui-form" action="">
+            <div style="position: absolute; left: 45%; top: 350px; transform: translate(-50%,-50%); width: 25%; height: auto;  padding: 20px 70px 30px 0; position: relative;">
+                <div style="width: 100px; height: 100px; position: absolute; left: 50%; top: -50px; transform: translate(-50%,-50%); border: 1px solid #808080; padding: 5px 5px 5px 5px; ">
+                    <img style="width: 100%; height: 100%; " src="@Url.Content(Model.Picture)" />
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="UserName" name="UserName" readonly="readonly" autocomplete="off" class="layui-input" value=@Model.UserName>
+                        <span class="field-validation-valid" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">账号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Account" readonly="readonly" autocomplete="off" class="layui-input" value=@Model.Account>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">邮箱</label>
+                    <div class="layui-input-block">
+                        <input type="email" name="Email" readonly="readonly" autocomplete="off" class="layui-input" value=@Model.Email>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">年龄</label>
+                    <div class="layui-input-block">
+                        <input type="number" name="Age" readonly="readonly" autocomplete="off" class="layui-input" value=@Model.Age>
+                    </div>
+
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">性别</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Sex" readonly="readonly" autocomplete="off" class="layui-input" value=@Model.Sex>
+                    </div>
+                </div>
+                @Html.HiddenFor(model => model.ID)
+                <div class="layui-form-item">
+                    <label class="layui-form-label">工资</label>
+                    <div class="layui-input-block">
+                        <input type="number" name="Salary"  class="layui-input" value=@Model.Salary>@Html.ValidationMessageFor(model => model.Salary)
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        角色：
+                    </label>
+                    <label class="layui-form-label">
+                        @Html.DisplayFor(model => model.RoleList)
+                    </label>
+                    @*<a class="layui-btn" id=@Model.ID onclick="open_wins(this)">修改</a>*@
+                    @Html.ActionLink("修改", "Detailss", new { id = Model.ID }, new { @class = "layui-btn layui-btn-xs" })
+                </div>
+                <div style="padding-left:50%;margin-top:50px;">
+                    <button type="submit" class="layui-btn layui-btn-radius" style="word-spacing: 15px;">保 存</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+}
+

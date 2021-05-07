@@ -1,0 +1,170 @@
+﻿@using ESCS.Web.Apps
+@model IList<ESCS.Domain.User>
+
+@{
+    ViewBag.Title = "用户管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var i1 = "";
+}
+<link href="~/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+
+
+
+<div>
+    <a href="/User/Create">
+        <button type="button" class="layui-btn">
+            <i class="layui-icon">&#xe608;</i> 添加
+        </button>
+    </a>
+</div>
+
+<div class="demoTable">
+    @using (Html.BeginForm())
+{
+    <span onclick="load()">用户名或账号: </span>
+            <div class="layui-inline">
+            <input class="layui-input" name="userName" id="demoReload" autocomplete="off">
+        </div>
+        <button class="layui-btn" data-type="reload" type="submit">搜索</button>
+}
+</div>
+<div>
+    <table lay-filter="demo" id="demo1">
+        <thead>
+            <tr>
+                <th lay-data="{field:'id', width:70,align:'center'}">
+                    序号
+                </th>
+                <th lay-data="{field:'username', width:100,align:'center'}">
+                    用户名
+                </th>
+                <th lay-data="{field:'experience', width:100, sort:true,align:'center'}">
+                    年龄
+                </th>
+                <th lay-data="{field:'q', width:100,align:'center'}">
+                    状态
+                </th>
+                <th lay-data="{field:'w', width:100,align:'center'}">
+                    账号
+                </th>
+                <th lay-data="{field:'e', width:150, sort:true,align:'center'}">
+                    工资
+                </th>
+                <th lay-data="{field:'r',align:'center'}">
+                    角色
+                </th>
+                <th lay-data="{field:'t',align:'center'}">
+                    操作
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model == null || Model.Count() == 0)
+            {
+                <tr>
+                    <td colspan="5">没有满足条件的数据！</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Age)
+                        </td>
+                        <td>
+                            @if (item.IsActive)
+                            {<p>√</p>}
+                            else
+                            {<p>×</p>}
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Account)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Salary) 元/月
+                        </td>
+                        <td>
+                            @foreach (var ie in item.RoleList)
+                            {
+                                i1 = i1 + "、" + ie.RoleName;//添加“、”间隔
+                            }
+                            @if (i1 != "")
+                            {
+                                i1 = i1.Substring(1);//删除第一个“、”
+                            }
+                            @i1
+                            @if (i1 != "")
+                            {
+                                i1 = ""; //重置装Rolelist容器
+                            }
+
+                        </td>
+                        <td>
+                            <div class="layui-btn-group">
+                                @Html.ActionLink("基本信息", "Details", "User", new { id = item.ID }, new { @class = "layui-btn" })
+                                @Html.ActionLink("业绩", "Performance", "User", new { id = item.ID }, new { @class = "layui-btn" })
+                                @if (item.IsActive)
+                                {
+                                    if (item.Account.ToLower().Trim() != "admin" && item.Account.ToLower().Trim() != AppHelper.LoginedUser.Account)
+                                    {
+                                        @Html.ActionLink("注销", "SwitchStatus", "User", new { id = item.ID }, new { onclick = "return confirm('你要注销吗?')", @class = "layui-btn" })
+                                        @Html.ActionLink("删除", "Delete", new { id = item.ID }, new { onclick = "return confirm('真的要删除吗?')", @class = "layui-btn" })
+                                    }
+                                    else
+                                    {
+                                        @:<span style="background-color:#cec9c9;color:#ffffff;" class="layui-btn layui-btn-radius layui-btn-disabled">注销</span>
+                                        @:<span style="background-color:#cec9c9;color:#ffffff;" class="layui-btn layui-btn-radius layui-btn-disabled">删除</span>
+                                    }
+
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("激活", "SwitchStatus", new { id = item.ID }, new { onclick = "return confirm('真的打算激活吗?')", @class = "layui-btn"});
+                                    @Html.ActionLink("删除", "Delete", new { id = item.ID }, new { onclick = "return confirm('真的要删除吗?')", @class = "layui-btn" })
+                                }
+                                @*@Html.ActionLink("重置密码", "ResetPassword", new { id = item.ID }, new { onclick = "load()", @class = "layui-btn" })*@
+                                <a class="layui-btn" id=@item.UserName onclick="load(this)">重置密码</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+
+
+
+    </table>
+
+</div>
+<div id="alert" style="position: absolute; left: 45%; top: 350px; padding: 10px 10px 10px 10px; display: none; border: 1px solid #3c7aa4; border-radius: 4px;font-size:x-large;font-weight:600; "></div>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    function load(obj) {
+        var r = confirm("你是否确定重置 "+obj.id+" 密码？")
+        if (r == true) {
+            $.get(
+             "/User/ResetPassword",
+             { userName: obj.id },
+             function (data, textStatus) {
+                 if (textStatus == "success")
+                 { $('#alert').html(data).addClass('alert-success').fadeIn(1000).fadeOut(2000); }
+                 else { $('#alert').html('重置失败！！！').addClass('alert-success').fadeIn(1000).fadeOut(2000); }
+             })
+        }
+        else {
+            $('#alert').html('重置失败！！！').addClass('alert-success').fadeIn(1000).fadeOut(2000);
+        }
+        
+        
+    }
+</script>
+

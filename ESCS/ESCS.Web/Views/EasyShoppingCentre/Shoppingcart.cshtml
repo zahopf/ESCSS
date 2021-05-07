@@ -1,0 +1,67 @@
+﻿@model IEnumerable<ESCS.Domain.ShoppingCart>
+
+@{
+    Layout = "~/Views/Shared/_LayoutEscs.cshtml";
+}
+<div style=" height:23vh;width:100vw;">
+    <div style="height: 8vh; width: 15vh; background-color: #ffffff; float:left;margin:5vh 0 0 25vw;border-radius:40%;text-align:center;font-size:35px;font-weight:600;color:#ff6a00;">
+        <p>易购</p>
+        <p style="font-size:25px;">YI GOU</p>
+    </div>
+    <div class="search-box" style="margin:6vh 10vw 0 0; float:right">
+        <div data-toggle="arrowdown" id="arrow8" class="search-toggle">
+            宝贝
+        </div>
+        <input class="search-in" type="text" name="goodsName" placeholder="    搜‘健康椅’试试，办公好选择">
+        <input type="button" class="search-but" value="搜索" style="width:95px;">
+
+    </div>
+</div>
+    
+    <div style="margin:100px 400px 0 400px;" id="big">
+        @using (Html.BeginForm())
+        {
+            <table lay-filter="demo" id="demo1" lay-data="{initSort:{field:'id', type:'null'}}">
+                <thead>
+                    <tr>
+                        <th lay-data="{field:'RoleName', width:500,align:'center'}">
+                            名字
+                        </th>
+                        <th lay-data="{field:'IsActive', width:100,align:'center'}">
+                            价格
+                        </th>
+                        <th lay-data="{field:'SysFunctionList',align:'center'}">
+                            数量
+                        </th>
+                        <th lay-data="{field:'q',align:'center'}">
+                            操作
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GoodsId.GoodsName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GoodsId.OutPrice)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Quantity)
+                            </td>
+                            <td>
+                                @Html.ActionLink("购买", "Purchase", new { id = item.GoodsId.ID, Quantity = item.Quantity,car=item.ID })
+                                @Html.ActionLink("删除", "Delete", new { id = item.ID })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+<div style="height:25vh;"></div>

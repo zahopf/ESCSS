@@ -1,0 +1,41 @@
+﻿@model IList< ESCS.Domain.SalesOrderDetails>
+@{
+    ViewBag.Title = "Xq";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>订单详情</h4>
+<hr />
+<div style="position: absolute; left: 45%; top: 180px; transform: translate(-50%,-50%); width: 25%; height: auto;  padding: 20px 70px 30px 0; position: relative;">
+    <table lay-filter="demo" id="demo2" lay-data="{initSort:{field:'id', type:'null'}}">
+        <thead>
+            <tr>
+                <th lay-data="{field:'Id',align:'center'}">
+                    商品名
+                </th>
+                <th lay-data="{field:'q',align:'center'}">
+                    数量
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.GoodsId.GoodsName
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+                    </tr>
+                }
+        </tbody>
+    </table>
+    <div style="padding-left:50%;margin-top:50px;margin-left:60px;">
+        <a href="~/SalesOrder/Own"><button type="button" class="layui-btn layui-btn-radius">返回</button></a>
+
+    </div>
+</div>

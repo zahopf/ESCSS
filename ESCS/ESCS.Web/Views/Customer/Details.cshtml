@@ -1,0 +1,69 @@
+﻿@model ESCS.Domain.Customer
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>客户详细信息</h4>
+<hr />
+
+    <div class="form-horizontal" style="position: relative;">
+        
+        <form class="layui-form" action="">
+            <div style="position: absolute; left: 45%; top: 350px; transform: translate(-50%,-50%); width: 25%; height: auto;  padding: 20px 70px 30px 0; position: relative;">
+                <div style="width: 100px; height: 100px; position: absolute; left: 50%; top: -50px; transform: translate(-50%,-50%); border: 1px solid #808080; padding: 5px 5px 5px 5px; ">
+                    <img style="width: 100%; height: 100%; " src="@Url.Content(Model.Picture)" />
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="CustomerName" readonly="readonly" autocomplete="off" class="layui-input" value=@Model.CustomerName>
+                        <span class="field-validation-valid" data-valmsg-for="CustomerName" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">账号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Account" readonly="readonly" autocomplete="off" class="layui-input" value=@Model.Account>
+                        <span class="field-validation-valid" data-valmsg-for="Account" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">邮箱</label>
+                    <div class="layui-input-block">
+                        <input type="email" name="Email" readonly="readonly" autocomplete="off" class="layui-input" value=@Model.Email>
+                        <span class="field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">性别</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Sex" readonly="readonly" autocomplete="off" class="layui-input" value=@Model.Sex>
+                        <span class="field-validation-valid" data-valmsg-for="Sex" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">电话</label>
+                    <div class="layui-input-block">
+                        <input type="tel" name="Number" readonly="readonly" autocomplete="off" class="layui-input" value=@Model.Number>
+                        <span class="field-validation-valid" data-valmsg-for="Number" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+
+                    <label class="layui-form-label">生日</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="Birthday" readonly="readonly" autocomplete="off" class="layui-input" value=@Model.Birthday>
+                    </div>
+                </div>
+                <div style="padding-left:50%;margin-top:50px;">
+                    <a href="~/Customer/Index"><button type="button" class="layui-btn layui-btn-radius" >返回</button></a>
+                    
+                </div>
+            </div>
+        </form>
+
+    </div>

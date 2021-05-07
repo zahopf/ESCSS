@@ -1,0 +1,81 @@
+﻿
+@model IList<ESCS.Domain.User>
+
+@{
+    ViewBag.Title = "用户管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = null;
+    var i = 1;
+}
+<link href="~/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+
+<table>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @if (item.IsActive)
+                {<p>√</p>}
+                else
+                {<p>×</p>}
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Salary) 元/月
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleList)
+            </td>
+            @*<td>
+                    <div class="layui-btn-group">
+                        @Html.ActionLink("详细信息", "Details", new { id = item.ID }, new { @class = "layui-btn" }) |
+                        @if (item.IsActive)
+                        {
+                            if (item.Account.ToLower().Trim() != "admin" && item.Account.ToLower().Trim() != AppHelper.LoginedUser.Account)
+                            {
+                                @Html.ActionLink("注销", "SwitchStatus", "User", new { id = item.ID }, new { onclick = "return confirm('你要注销吗?')", @class = "layui-btn" }) @:|
+                                        }
+                            else
+                            {
+                                @:<span class="layui-btn layui-btn-radius layui-btn-disabled">注销</span> |
+                                        }
+
+                        }
+                        else
+                        {
+                            @Html.ActionLink("激活", "SwitchStatus", new { id = item.ID }, new { onclick = "return confirm('真的打算激活吗?')", @class = "layui-btn" });@: |
+                                    }
+                        @Html.ActionLink("删除", "Delete", new { id = item.ID }, new { onclick = "return confirm('真的要删除吗?')", @class = "layui-btn" })|
+                        @Html.ActionLink("重置密码", "ResetPassword", new { id = item.ID }, new { onclick = "return confirm('真的要重置密码吗?')", @class = "layui-btn" })|
+
+                        @foreach (var role in AppHelper.LoginedUser.RoleList)
+                        {
+                            if (role.RoleName == @ViewBag.Role)
+                            {
+                                @Html.ActionLink("工资管理 ", "Salarys", new { id = item.ID }, new { @class = "layui-btn" });
+                            @Html.ActionLink("配置角色", "AssignRole", new { id = item.ID }, new { @class = "layui-btn" });
+                                                                                                                                      continue;
+                            }
+                            i = 0;
+                        }
+                        @if (i == 0)
+                        {
+                            <span style="color:Gray">工资管理</span>
+                            <span>|</span>
+                            <span style="color:Gray">配置角色</span>
+                        }
+                    </div>
+                </td>*@
+        </tr>
+    }
+</table>
+<input value="" id="bb"/>
+<div id="test1"></div>

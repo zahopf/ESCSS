@@ -1,0 +1,148 @@
+﻿@model ESCS.Domain.PurchaseOrder
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    <input  value="0" name="pd" type="hidden"/>
+    <input  value=@Model.ID name="id" type="hidden"/>
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>进货单创建</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <form class="layui-form" action="">
+            <div style="position: absolute; left: 45%; top: 150px; transform: translate(-50%,-50%); width: 25%; height: auto;  padding: 20px 70px 30px 0; position: relative;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品名</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="GoodsName" name="GoodsName" value=@ViewBag.GoodsName placeholder="请输入"  class="layui-input">
+                    </div>
+                    
+                </div>
+                <div style="padding-left:50%;margin-bottom:10px;">
+                    <button type="submit" class="layui-btn layui-btn-radius" style="word-spacing: 15px;">查询</button>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">进价</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="InnPrice" autocomplete="off" class="layui-input" value=@ViewBag.InnPrice readonly="readonly">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">售价</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="OutPrice" autocomplete="off" class="layui-input" value=@ViewBag.OutPrice readonly="readonly">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">库存</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Stock" autocomplete="off" class="layui-input" value=@ViewBag.Stock readonly="readonly">
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+}
+@using (Html.BeginForm())
+{
+            <div style="position: absolute; left: 45%; top: 15px; transform: translate(-50%,-50%); width: 25%; height: auto;  padding: 20px 70px 10px 0; position: relative;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">进货数量</label>
+                    <div class="layui-input-block">
+                        <input type="number" name="Quantity" id="Quantity" class="layui-input" min="1" value="1" autocomplete="off">
+                        <p id="Qbig" style="color:red;"></p>
+                    </div>
+                </div>
+                <div style="padding-left:50%;margin-top:0px;">
+                    <button id="tj" type="submit" class="layui-btn layui-btn-radius" style="word-spacing: 15px;">添加</button>
+                </div>
+                <input  value=@Model.ID name="id" type="hidden"/>
+                <input value="1" name="pd" type="hidden" />
+                <input type="hidden" value=@ViewBag.Id name="GoodsId" />
+            </div>
+}
+@using (Html.BeginForm())
+{
+    <div style="position: absolute; left: 45%; top:0px; transform: translate(-50%,-50%); width: 25%; height: auto;  padding: 20px 70px 50px 0; position: relative;">
+        <div style="padding-left:50%;margin-top:0px;">
+            <button type="submit" class="layui-btn layui-btn-radius" style="word-spacing: 15px;">保存</button>
+        </div>
+    </div>
+    <input  value=@Model.ID name="id" type="hidden"/>
+    <input value="3" name="pd" type="hidden" />
+    <input type="hidden" value=@ViewBag.Id name="GoodsId" />
+}
+
+@using (Html.BeginForm())
+{
+    <div style="position: absolute; left: 45%; top:0px; transform: translate(-50%,-50%); width: 25%; height: auto;  padding: 20px 70px 30px 0; position: relative;">
+        <table lay-filter="demo" id="demo2" lay-data="{initSort:{field:'id', type:'null'}}">
+            <thead>
+                <tr>
+                    <th lay-data="{field:'Id',align:'center'}">
+                        商品名
+                    </th>
+                    <th lay-data="{field:'q',align:'center'}">
+                        数量
+                    </th>
+                    @*<th lay-data="{field:'l',align:'center'}">
+                        操作
+                    </th>*@
+
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model.PurchaseOrderDetails.Count() > 0 && Model.PurchaseOrderDetails != null)
+                {
+                    foreach (var item in Model.PurchaseOrderDetails)
+                    {
+                        <tr>
+                            @if (item.InnQuantity == 0)
+                            {
+                                continue;
+                            }
+                            else
+                            { 
+                                <td>@item.GoodsId.GoodsName</td>
+                                <td>@item.InnQuantity</td>
+                            }
+                        </tr>
+                    }
+                }
+            </tbody>
+
+        </table>
+    </div>
+
+}
+@*<script src="~/Scripts/jquery.min.js"></script>*@
+<script>
+    setInterval(function () {
+        var Quantity = document.getElementById("Quantity").value;
+        //alert("sff");
+        //alert(Quantity);
+
+        @*var OutPict = @Model.OutPrice
+        //alert(OutPict);
+        document.getElementById("AllPice").innerText = Quantity * OutPict;
+        var Stock = document.getElementById("Stock").value;*@
+        if (Quantity=="") {
+            //alert("购买数量不允许超过库存！！！");
+            document.getElementById("Qbig").innerText = "数量不允为空！！！";
+            $("#tj").attr("type", "button");
+        }
+        else if (Number(Quantity) <= 0) {
+            //alert("购买数量不允许超过库存！！！");
+            document.getElementById("Qbig").innerText = "数量不允许小于等于0！！！";
+        }
+        else { document.getElementById("Qbig").innerText = null; }
+    }, 500);
+</script>

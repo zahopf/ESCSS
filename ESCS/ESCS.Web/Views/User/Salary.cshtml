@@ -1,0 +1,79 @@
+﻿@using ESCS.Web.Apps
+@model IList<ESCS.Domain.User>
+@{
+    ViewBag.Title = "工资管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/Modal/jquery.simplemodal.js"></script>
+<script src="~/Scripts/Modal/basic.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/layui-v2.5.7/layui/layui.js"></script>
+<script>
+    function myFunction(obj) {
+        var time = $("#test3").val();
+        if (time == "")
+        { alert("请选择结算月！！！"); }
+        else
+        {
+            $.post(
+            "/User/Salary",
+            { time: time },
+            function (data, textStatus) {
+                if (textStatus == "success") {
+                    alert(data);
+                }
+                else { alert(textStatus) }
+            })
+        }
+    }
+</script>
+
+<h4>工资管理</h4>
+<hr />
+<div style="position: absolute; left: 45%; top: 230px; transform: translate(-50%,-50%); width: 25%; height: auto;  padding: 20px 70px 30px 0; position: relative;">
+
+    @using (Html.BeginForm())
+    {
+        <div class="layui-inline">
+      <label class="layui-form-label">工资结算月</label>
+      <div class="layui-input-inline">
+          <input type="text" name="time" autocomplete="off" class="layui-input" id="test3" placeholder="yyyy/MM">
+      </div>
+    </div>
+        <br />
+        <br />
+        <p><input type="button" value="全体工资结算"  class="layui-btn layui-btn-radius layui-btn-danger" onclick="myFunction(this)" /></p>
+        <br />
+    }
+    <div>
+        <table lay-filter="demo" id="demo2">
+            <thead>
+                <tr>
+                    <th lay-data="{field:'id',align:'center'}">
+                        名字
+                    </th>
+
+                    <th lay-data="{field:'id1',align:'center'}">
+                        工资
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Salary) 元/月
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

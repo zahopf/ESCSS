@@ -1,0 +1,156 @@
+﻿
+@model IList<ESCS.Domain.Role>
+
+@{
+    ViewBag.Title = "用户管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var i1 = "";
+}
+<link href="~/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/Modal/jquery.simplemodal.js"></script>
+<script src="~/Scripts/Modal/basic.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/layui-v2.5.7/layui/layui.js"></script>
+<style>
+    .alert-success {
+        background-color: #3c7aa4;
+    }
+</style>
+
+<script>
+
+    //修改名
+    function myFunction(obj) {
+        var id = obj.id;
+        $.get(
+            "/Role/Edit",
+            { id: id },
+            function (data, textStatus) {
+                if (textStatus == "success")
+                {
+                    var txt;
+                    var person = prompt("请输入名字：", data);
+                    if (person != null && person != "") {
+                        $.post(
+                         "/Role/Edit",
+                         { id: id, name: person },
+                         function (data1, textStatus1) {
+                             if (textStatus1 == "success") {
+
+                                 $('#alert').html(data1).addClass('alert-success').fadeIn(1000).fadeOut(2000);
+                                 setTimeout(function(){ window.location = "@Url.Content("~/Role/Index")"},3000);
+
+                             }
+                             else { alert(textStatus1) }
+                         }
+
+                         )
+                    }
+                    else { $('#alert').html('修改失败！！！').addClass('alert-success').fadeIn(1000).fadeOut(2000); }
+                }
+                else
+                { alert(textStatus) }
+            })
+
+    }
+</script>
+<h4>角色管理</h4>
+<hr />
+<div>
+    <a href="/Role/Create">
+        <button type="button" class="layui-btn">
+            <i class="layui-icon">&#xe608;</i> 添加
+        </button>
+    </a>
+</div>
+
+<div class="demoTable">
+    @using (Html.BeginForm())
+    {
+        <span>用户名或账号: </span>
+        <div class="layui-inline">
+            <input class="layui-input" name="roleName" id="demoReload" autocomplete="off">
+        </div>
+        <button class="layui-btn" data-type="reload" type="submit">搜索</button>
+    }
+</div>
+<div>
+    <table lay-filter="demo" id="demo1" lay-data="{initSort:{field:'id', type:'null'}}">
+        <thead>
+            <tr>
+                <th lay-data="{field:'RoleName', width:100,align:'center'}">
+                    角色名
+                </th>
+                <th lay-data="{field:'IsActive', width:100,align:'center'}">
+                    状态
+                </th>
+                <th lay-data="{field:'SysFunctionList',align:'center'}">
+                    菜单权限
+                </th>
+                <th lay-data="{field:'q',align:'center'}">
+                    操作
+                </th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model == null || Model.Count() == 0)
+            {
+                <tr>
+                    <td colspan="5">没有满足条件的数据！</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RoleName)
+                        </td>
+                        <td>
+                            @if (item.IsActive)
+                            {<p>√</p>}
+                            else
+                            {<p>×</p>}
+                        </td>
+                        <td>
+                            @foreach (var ie in item.SysFunctionList)
+                            {
+                                i1 = i1 + "、" + ie.SystemFunctionName;//添加“、”间隔
+                            }
+                            @if (i1 != "")
+                            {
+                                i1 = i1.Substring(1);//删除第一个“、”
+                            }
+                            @i1
+                            @if (i1 != "")
+                            {
+                                i1 = ""; //重置装Rolelist容器
+                            }
+                        </td>
+                        <td>
+                            <div class="layui-btn-group">
+                                @if (item.IsActive)
+                                {
+                                    @Html.ActionLink("注销", "SwitchStatus", new { id = item.ID }, new { onclick = "return confirm('你要注销吗?')", @class = "layui-btn" })
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("激活", "SwitchStatus", new { id = item.ID }, new { onclick = "return confirm('真的打算激活吗?')", @class = "layui-btn" });
+                                }
+                                @*@Html.ActionLink("修改", "Edit", new { id = item.ID }, new { @class = "layui-btn" })*@
+                                <a class="layui-btn" id=@item.ID onclick="myFunction(this)">修改</a> 
+                                @Html.ActionLink("菜单权限配置", "Authorize", new { id = item.ID }, new { @class = "layui-btn" })
+                                @Html.ActionLink("删除", "Delete", new { id = item.ID }, new { onclick = "return confirm('真的打算删除吗?')", @class = "layui-btn" })
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <div id="alert" style="position: absolute; left: 45%; top: 350px; padding: 10px 10px 10px 10px; display: none; border: 1px solid #3c7aa4; border-radius: 4px;font-size:x-large;font-weight:600; "></div>
+</div>
+

@@ -1,0 +1,85 @@
+﻿@model ESCS.Domain.Customer
+
+@{
+    Layout = "~/Views/Shared/_LayoutEscs.cshtml";
+}
+    <div style="height:8vh;"></div>
+    <div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal" >
+                @Html.ValidationSummary(true)
+                <form class="layui-form" action="">
+                    <div style=" width: 40vw; height: auto;  margin-left:30vw; ">
+                        <div style="width: 18%; height: 19%;  margin-left:47%;margin-bottom:40px; ">
+                            <div style="border: 1px solid #ffffff; padding: 5px 5px 5px 5px;width:89px;height:80px;">
+                                <img class="layui-upload-img" id="demo1" style="width: 100%; height: 100%;">
+                            </div>
+                            <div class="layui-upload" style="margin-top:10px;">
+                                <button type="button" class="layui-btn" id="test2">上传图片</button>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">用户名</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="CustomerName" name="CustomerName" data-val="true" placeholder="请输入" autocomplete="off" class="layui-input" value="@Model.CustomerName">
+                                @Html.ValidationMessageFor(model => model.CustomerName)
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">账号</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="Account" placeholder="请输入" data-val="true" autocomplete="off" class="layui-input" value="@Model.Account">
+                                @Html.ValidationMessageFor(model => model.Account)
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">邮箱</label>
+                            <div class="layui-input-block">
+                                <input type="email" name="Email" data-val="true" placeholder="请输入" autocomplete="off" class="layui-input" value="@Model.Email">
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </div>
+                        </div>
+                        <div class="layui-form" lay-filter="test1">
+                            <label class="layui-form-label">性别</label>
+                            <div class="layui-input-block">
+                                <input type="radio" name="Sex" value="男" title="男" checked>
+                                <input type="radio" name="Sex" value="女" title="女">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">电话</label>
+                            <div class="layui-input-block">
+                                <input type="tel" name="Number" data-val="true" placeholder="请输入" autocomplete="off" class="layui-input" value="@Model.Number">
+                                @Html.ValidationMessageFor(model => model.Number)
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">密码</label>
+                            <div class="layui-input-block">
+                                <input type="password" name="Password" data-val="true" placeholder="请输入" autocomplete="off" class="layui-input" value="@Model.Password">
+                                @Html.ValidationMessageFor(model => model.Password)
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+
+                            <label class="layui-form-label">生日</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="Birthday" data-val="true" class="layui-input" id="test12" placeholder="dd/MM/yyyy" readonly="readonly" value="@Model.Birthday">
+                                @Html.ValidationMessageFor(model => model.Birthday)
+                            </div>
+                        </div>
+                        <div style="padding-left:50%;margin-top:50px;">
+                            <button type="submit" id="bb" class="layui-btn layui-btn-radius" style="word-spacing: 15px;">保 存</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        }
+
+    </div>
+    <div style="height:4vh;"></div>

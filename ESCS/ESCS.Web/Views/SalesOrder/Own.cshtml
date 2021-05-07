@@ -1,0 +1,116 @@
+﻿@model IList<ESCS.Domain.SalesOrder>
+
+@{
+    ViewBag.Title = "用户管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/layui-v2.5.7/layui/layui.js"></script>
+@using (Html.BeginForm())
+{
+    <div class="layui-inline">
+        <label class="layui-form-label">搜索选择框</label>
+        <div class="layui-input-inline">
+            <select style="height:35px;" name="modules" lay-verify="required" lay-search="">
+                <option value="1">全部</option>
+                <option value="货已送到">货已送到</option>
+                <option value="配送中">配送中</option>
+                <option value="完成">完成</option>
+            </select>
+        </div>
+    </div>
+    <button class="layui-btn" data-type="reload" type="submit">搜索</button>
+}
+<div>
+    <table lay-filter="demo" id="demo1" lay-data="{initSort:{field:'id', type:'null'}}">
+        <thead>
+            <tr>
+                <th lay-data="{field:'Id', width:100,align:'center'}">
+                    序号
+                </th>
+                <th lay-data="{field:'q', width:150,align:'center'}">
+                    客户
+                </th>
+                <th lay-data="{field:'a', width:200,align:'center'}">
+                    下单时间
+                </th>
+                <th lay-data="{field:'s', width:100,align:'center'}">
+                    数量
+                </th>
+                <th lay-data="{field:'d', width:200,align:'center'}">
+                    金额
+                </th>
+                <th lay-data="{field:'f', width:100,align:'center'}">
+                    状态
+                </th>
+                <th lay-data="{field:'f1', width:300,align:'center'}">
+                    收货地址
+                </th>
+                <th lay-data="{field:'f2', width:100,align:'center'}">
+                    收件人
+                </th>
+                <th lay-data="{field:'h', width:100,align:'center'}">
+                    备注
+                </th>
+                <th lay-data="{field:'l',align:'center'}">
+                    操作
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerId.CustomerName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Time)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Money)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Addressing)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Addressee)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Remarks)
+                        </td>
+
+
+                        <td>
+                            @Html.ActionLink("详情", "Xq", new { id = item.ID }, new {  @class = "layui-btn" })
+                            @if (item.Status == "配送中")
+                            { @Html.ActionLink("完成配送", "Applicationings", new { id = item.ID }, new { onclick = "return confirm('真的完成了吗?')", @class = "layui-btn" })}
+                            else
+                            {<button type="button" class="layui-btn layui-btn-xs layui-btn-disabled">完成配送</button> }
+                            @if (item.Status == "寄回中")
+                            { @Html.ActionLink("确认收货", "Confirmed", new { id = item.ID }, new { onclick = "return confirm('真的完成了吗?')", @class = "layui-btn" })}
+                            else
+                            { <button type="button" class="layui-btn layui-btn-xs layui-btn-disabled">确认收货</button>}
+                        </td>
+                    </tr>
+                }
+        </tbody>
+    </table>
+
+</div>
+
+

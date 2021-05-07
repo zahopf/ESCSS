@@ -1,0 +1,52 @@
+﻿@model ESCS.Domain.Role
+@{
+    ViewBag.Title = "创建用户";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var roleList = ViewBag.List as IList<ESCS.Domain.SystemFunction>;
+}
+
+<h4>创建角色</h4>
+<hr />
+<fieldset>
+    <legend>角色信息</legend>
+    <div>
+        <form class="layui-form" action="">
+            @foreach (var item in roleList)
+            {
+                <input type="checkbox" name="" title=@item.SystemFunctionName value=@item.ID lay-skin="primary">
+            }
+        </form>
+    </div>
+</fieldset>
+<div class="Bigdiv">
+        <div>
+            <br />
+            <p class="Create">
+                @Html.ActionLink("返回列表", "Index")
+            </p>
+            <br />
+            <br />
+            @using (Html.BeginForm())
+            {
+                @Html.ValidationSummary(true)
+                <fieldset>
+                    <legend>用户信息</legend>
+                    <table class="Tr">
+                        <tr>
+                            <td>角色名：</td>
+                            <td>
+                                @Html.EditorFor(model => model.RoleName)
+                                @Html.ValidationMessageFor(model => model.RoleName)
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <br />
+
+                <input id="Roleid" value="" name="Roleid" type="hidden" />
+                <input id="Roleids" class="layui-btn layui-btn-radius" value="保  存" name="Roleids" type="submit" />
+            }
+        </div>
+
+    </div>

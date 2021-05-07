@@ -1,0 +1,127 @@
+﻿@using ESCS.Web.Apps
+@*@model PageList<ESCS.Domain.User>*@
+@model IList<ESCS.Domain.Customer>
+
+@{
+    ViewBag.Title = "用户管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+
+
+<div class="demoTable">
+    @using (Html.BeginForm())
+    {
+        <span>用户名或账号: </span>
+        <div class="layui-inline">
+            <input class="layui-input" name="userName" id="demoReload" autocomplete="off">
+        </div>
+        <button class="layui-btn" data-type="reload" type="submit">搜索</button>
+    }
+</div>
+<div>
+    <table lay-filter="demo" id="demo1">
+        <thead>
+            <tr>
+                <th lay-data="{field:'id', width:70,align:'center'}">
+                    序号
+                </th>
+                <th lay-data="{field:'username', width:100,align:'center'}">
+                    客户名
+                </th>
+                <th lay-data="{field:'experience', width:200, sort:true,align:'center'}">
+                    生日
+                </th>
+                <th lay-data="{field:'q', width:100,align:'center'}">
+                    状态
+                </th>
+                <th lay-data="{field:'w', width:100,align:'center'}">
+                    账号
+                </th>
+                <th lay-data="{field:'e', width:150,align:'center'}">
+                    电话
+                </th>
+                <th lay-data="{field:'r', width:200,align:'center'}">
+                    邮箱
+                </th>
+                <th lay-data="{field:'j',sort:true, width:100,align:'center'}">
+                    VIP
+                </th>
+                <th lay-data="{field:'t',align:'center'}">
+                    操作
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Birthday)
+                        </td>
+                        <td>
+                            @if (item.IsActive)
+                            {<p>√</p>}
+                            else
+                            {<p>×</p>}
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Account)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Number) 
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                            
+                        </td>
+                        <td>
+                            @if (item.VIP)
+                            {<p>√</p>}
+                            else
+                            {<p>×</p>}
+
+                        </td>
+                        <td>
+                            <div class="layui-btn-group">
+                                @Html.ActionLink("基本信息", "Details", new { id = item.ID }, new { @class = "layui-btn" })
+                                @Html.ActionLink("订单信息", "AllSalesOrder", new { id = item.ID }, new { @class = "layui-btn" })
+                                @if (item.VIP)
+                                {
+                                      @Html.ActionLink("NVIP", "VIP", new { id = item.ID }, new { onclick = "return confirm('真的要修改客户VIP吗?')", @class = "layui-btn" })
+                                }
+                                else
+                                {
+                                      @Html.ActionLink("YVIP", "VIP", new { id = item.ID }, new { onclick = "return confirm('真的要修改客户VIP吗?')", @class = "layui-btn" })
+                                }
+                                @if (item.IsActive)
+                                {
+                                    @Html.ActionLink("注销", "SwitchStatus", new { id = item.ID }, new { onclick = "return confirm('你要注销吗?')", @class = "layui-btn" })
+                                    @Html.ActionLink("删除", "Delete", new { id = item.ID }, new { onclick = "return confirm('真的要删除吗?')", @class = "layui-btn" })
+
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("激活", "SwitchStatus", new { id = item.ID }, new { onclick = "return confirm('真的打算激活吗?')", @class = "layui-btn" });
+                                    @Html.ActionLink("删除", "Delete", new { id = item.ID }, new { onclick = "return confirm('真的要删除吗?')", @class = "layui-btn" })
+                                }
+                               
+                            </div>
+                        </td>
+                    </tr>
+                }
+        </tbody>
+
+
+
+    </table>
+
+</div>
+

@@ -1,0 +1,173 @@
+﻿@model IList<ESCS.Domain.SalesOrder>
+
+@{
+    ViewBag.Title = "用户管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var purchaseOrder = ViewBag.PurchaseOrder as IList<ESCS.Domain.PurchaseOrder>;
+}
+<link href="~/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/layui-v2.5.7/layui/layui.js"></script>
+<h4> 业绩</h4>
+<hr />
+<br />
+<fieldset>
+
+    <legend style="font-size:20px;font-weight:500;">送货情况</legend>
+
+    <table lay-filter="demo3" id="demo3" lay-data="{initSort:{field:'id', type:'null'}}">
+        <thead>
+            <tr>
+                <th lay-data="{field:'Id',align:'center',totalRowText:'合计'}">
+                    序号
+                </th>
+                <th lay-data="{field:'q',align:'center'}">
+                    客户
+                </th>
+                <th lay-data="{field:'m',align:'center'}">
+                    送货员
+                </th>
+                <th lay-data="{field:'a',align:'center'}">
+                    下单时间
+                </th>
+                <th lay-data="{field:'s',align:'center'}">
+                    数量
+                </th>
+                <th lay-data="{field:'d',align:'center',totalRow:true}">
+                    金额
+                </th>
+                <th lay-data="{field:'dd',align:'center',totalRow:true}">
+                    利润
+                </th>
+                <th lay-data="{field:'f',align:'center'}">
+                    状态
+                </th>
+
+                <th lay-data="{field:'h',align:'center'}">
+                    备注
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerId.CustomerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserId.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Time)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Money)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Profits)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Remarks)
+                    </td>
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</fieldset>
+
+<br />
+<br />
+<br />
+<fieldset>
+    <legend style="font-size:20px;font-weight:500;">进货情况</legend>
+
+    <table lay-filter="demo4" id="demo4" lay-data="{initSort:{field:'id', type:'null'}}">
+        <thead>
+            <tr>
+                <th lay-data="{field:'Id1',align:'center',totalRowText:'合计'}">
+                    序号
+                </th>
+                <th lay-data="{field:'a1',align:'center',totalRow:true}">
+                    预计金额
+                </th>
+                <th lay-data="{field:'s1',align:'center',totalRow:true}">
+                    实际金额
+                </th>
+                <th lay-data="{field:'d1',align:'center'}">
+                    创建时间
+                </th>
+                <th lay-data="{field:'f1',align:'center'}">
+                    品种数
+                </th>
+                <th lay-data="{field:'g1',align:'center'}">
+                    状态
+                </th>
+                <th lay-data="{field:'h1',align:'center'}">
+                    备注
+                </th>
+                <th lay-data="{field:'c1',align:'center'}">
+                    操作员
+                </th>
+                <th lay-data="{field:'j1',align:'center'}">
+                    进货员
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in purchaseOrder)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Money1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Money2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Remarks)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserId.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserIds.UserName)
+        </td>
+    </tr>
+}
+        </tbody>
+    </table>
+</fieldset>
+
+<div style="padding-left:45%;margin-top:50px;margin-left:60px;">
+    <a href="~/User/Index"><button type="button" class="layui-btn layui-btn-radius">返回</button></a>
+
+</div>

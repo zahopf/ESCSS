@@ -1,0 +1,407 @@
+﻿@model IList<ESCS.Domain.Address>
+@{
+    //Layout = "~/Views/Shared/_LayoutEscs.cshtml";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EditAddress</title>
+    <link href="~/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/Content/dz.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/layui-v2.5.7/layui/layui.js"></script>
+    <script src="~/Content/ddzz.js"></script>
+    <link href="~/Content/ESCS/chahua3360/css/reset.css" rel="stylesheet" />
+    <link href="~/Content/ESCS/chahua3360/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/ESCS/chahua3360/css/style.css" rel="stylesheet" />
+    <script src="~/Content/ESCS/chahua3360/js/jquery_1.9.js"></script>
+    <script src="~/Content/ESCS/chahua3360/js/main.js"></script>
+    <script src="~/Content/ESCS/chahua3360/js/img-show.js"></script>
+
+    <style type="text/css">
+        .layui-table-cell {
+            height: auto;
+            line-height: 28px;
+        }
+    </style>
+</head>
+
+
+<body >
+    <!--scroll-head-->
+    <div class="scroll-head"></div>
+    <!--topp-->
+    <div class="top-wrapper" id="topp">
+        <div class="top-info">
+            <div class="top-left">
+                <!--个人信息-->
+                @if (ViewBag.pd == 1)
+                {
+                    <div data-toggle="arrowdown" id="arrow1" class="user-name">
+                        <a style="color:#ff4100;" href="#">欢迎，@ViewBag.name</a>
+                        <span class="down-icon"></span>
+                    </div>
+                    <div data-toggle="arrowdown" class="user-name">
+                        <a style="color:black;" href="~/Customer/CustomerLogin">注销</a>
+                    </div>
+                }
+                else
+                {
+                    <div data-toggle="arrowdown" class="user-name">
+                        <a style="color:#ff4100;" href="~/Customer/CustomerLogin">亲,请登录</a>
+                    </div>
+                    <div data-toggle="arrowdown" class="user-name">
+                        <a href="~/EasyShoppingCentre/Create">免费注册</a>
+                    </div>
+                }
+                <div data-toggle="arrowdown" class="user-name">
+                    <a style="color:#ff4100;" href="~/EasyShoppingCentre/YiGouShangCheng">易购首页</a>
+                </div>
+
+                <div data-toggle="hidden-box" id="nav-box1" class="my-taobao-box">
+                    <ul>
+                        <a href="~/EasyShoppingCentre/Salesorder"><li>已买到的宝贝</li></a>
+
+                        <a href="/EasyShoppingCentre/EditAddress"><li>地址管理</li></a>
+                        <a href="/EasyShoppingCentre/ChangePassword"><li>安全管理</li></a>
+                        <a href="~/EasyShoppingCentre/EditloginUser"><li>个人资料</li></a>
+                    </ul>
+
+                </div>
+            </div>
+
+            <!--top-right-->
+            <div class="top-right">
+
+                <div data-toggle="arrowdown" id="arrow3" class="user-name">
+                    <a href="#">我的易购</a>
+                    <span class="down-icon"></span>
+                </div>
+                <div data-toggle="arrowdown" id="arrow4" class="user-name">
+                    <i class="fa fa-shopping-cart fa-orange"></i>
+                    <a href="~/EasyShoppingCentre/Shoppingcart">购物车</a>
+                </div>
+                <div data-toggle="arrowdown" id="arrow7" class="user-name">
+                    <i class="fa fa-list-ul fa-orange"></i>
+                    <a href="#">网站导航</a>
+                    <span class="down-icon"></span>
+                </div>
+                <!--hidden-box-->
+
+                <div data-toggle="hidden-box" id="nav-box3" class="my-taobao-box">
+                    <ul>
+                        <a href="~/EasyShoppingCentre/Salesorder"><li>已买到的宝贝</li></a>
+
+                        <a href="/EasyShoppingCentre/EditAddress"><li>地址管理</li></a>
+                        <a href="/EasyShoppingCentre/ChangePassword"><li>安全管理</li></a>
+                        <a href="~/EasyShoppingCentre/EditloginUser"><li>个人资料</li></a>
+                    </ul>
+                </div>
+                <div data-toggle="hidden-box" id="nav-box7" class="nav-box">
+                    <div class="sub-nav top-sub-nav">
+                        <!--<input type="button" class="more-btn" value="更多"/>-->
+                        <!--sub-nav-cell-->
+                        <div class="sub-nav-cell right-shadow">
+                            <h3 class="orange">主题市场</h3>
+                            <ul class="sub-nav-box">
+                                <li><a href="#">爱美女人</a></li>
+                                <li><a href="#">品质男人</a></li>
+                                <li><a href="#">淘宝二手</a></li>
+                                <li><a href="#">全球购</a></li>
+                                <li><a href="#">品牌街</a></li>
+                                <li><a href="#">汽车生活</a></li>
+                                <li><a href="#">花嫁新娘</a></li>
+                                <li><a href="#">孕婴童</a></li>
+                                <li><a href="#">同城便民</a></li>
+                                <li><a href="#">爱么装</a></li>
+                                <li><a href="#">运动户外</a></li>
+                                <li><a href="#">家用电器</a></li>
+                                <li><a href="#">狠爱</a></li>
+                                <li><a href="#">网络游戏</a></li>
+                                <li><a href="#">潮流设计</a></li>
+                                <li><a href="#">淘宝星愿</a></li>
+                            </ul>
+                        </div>
+                        <div class="sub-nav-cell right-shadow">
+                            <h3 class="green-sp">特色购物</h3>
+                            <ul class="sub-nav-box sp">
+                                <li><a href="#">爱美女人</a></li>
+                                <li><a href="#">品质男人</a></li>
+                                <li><a href="#">淘宝二手</a></li>
+                                <li><a href="#">全球购</a></li>
+                                <li><a href="#">品牌街</a></li>
+                                <li><a href="#">汽车生活</a></li>
+                                <li><a href="#">花嫁新娘</a></li>
+                                <li><a href="#">孕婴童</a></li>
+                                <li><a href="#">同城便民</a></li>
+                                <li><a href="#">爱么装</a></li>
+                                <li><a href="#">运动户外</a></li>
+                                <li><a href="#">家用电器</a></li>
+                                <li><a href="#">狠爱</a></li>
+                                <li><a href="#">网络游戏</a></li>
+                                <li><a href="#">潮流设计</a></li>
+                                <li><a href="#">淘宝星愿</a></li>
+
+                            </ul>
+                        </div>
+                        <div class="sub-nav-cell right-shadow">
+                            <h3 class="red-now">当前热点</h3>
+                            <ul class="sub-nav-box now">
+                                <li><a href="#">爱美女人</a></li>
+                                <li><a href="#">品质男人</a></li>
+                                <li><a href="#">淘宝二手</a></li>
+                                <li><a href="#">全球购</a></li>
+                                <li><a href="#">品牌街</a></li>
+                                <li><a href="#">汽车生活</a></li>
+                                <li><a href="#">花嫁新娘</a></li>
+                                <li><a href="#">孕婴童</a></li>
+                                <li><a href="#">同城便民</a></li>
+                                <li><a href="#">爱么装</a></li>
+                                <li><a href="#">运动户外</a></li>
+                                <li><a href="#">家用电器</a></li>
+                                <li><a href="#">狠爱</a></li>
+                                <li><a href="#">网络游戏</a></li>
+                                <li><a href="#">潮流设计</a></li>
+                                <li><a href="#">淘宝星愿</a></li>
+
+                            </ul>
+                        </div>
+                        <div class="sub-nav-cell">
+                            <h3 class="blue-more">更多精彩</h3>
+                            <ul class="sub-nav-box more">
+                                <li><a href="#">爱美女人</a></li>
+                                <li><a href="#">品质男人</a></li>
+                                <li><a href="#">淘宝二手</a></li>
+                                <li><a href="#">全球购</a></li>
+                                <li><a href="#">品牌街</a></li>
+                                <li><a href="#">汽车生活</a></li>
+                                <li><a href="#">花嫁新娘</a></li>
+                                <li><a href="#">孕婴童</a></li>
+                                <li><a href="#">同城便民</a></li>
+                                <li><a href="#">爱么装</a></li>
+                                <li><a href="#">运动户外</a></li>
+                                <li><a href="#">家用电器</a></li>
+                                <li><a href="#">狠爱</a></li>
+                                <li><a href="#">网络游戏</a></li>
+                                <li><a href="#">潮流设计</a></li>
+                                <li><a href="#">淘宝星愿</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div style=" height:23vh;width:100vw;">
+        <div style="height: 8vh; width: 15vh; background-color: #ffffff; float: left; margin: 5vh 0 0 19vw; border-radius: 40%; text-align: center; font-size: 35px; font-weight: 600; color: #ff6a00;">
+            <p>易购</p>
+            <p style="font-size:25px;">YI GOU</p>
+        </div>
+        <div style="margin: 6vh 25vw 0 0; float: right; text-align: center; font-size: 20px; font-weight: 600; color: #ff6a00; ">
+            <p>地址管理</p>
+        </div>
+    </div>
+
+    <div style=" width: 45vw; height: auto;  margin:0 0 0 27vw; ">
+
+        <div>
+            <div>
+                <form class="layui-form" action="">
+                    <div class="layui-form-item" id="addressDiv">
+                        <label class="layui-form-label">详细地址</label>
+                        <div class="layui-input-inline">
+                            <select name="P1" lay-filter="province" id="province">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="layui-input-inline">
+                            <select name="C1" lay-filter="city" id="city">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="layui-input-inline">
+                            <select name="A1" lay-filter="area" id="area">
+                                <option></option>
+                            </select>
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+           
+        <div style=" margin-top:30px;">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal" style="position: relative;">
+                    @Html.ValidationSummary(true)
+
+                    <form class="layui-form" action="">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">具体地址</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="Addressing" placeholder="请输入具体地址" autocomplete="off" class="layui-input" pattern="([^\x00-\xff]|[A-Za-z0-9_])+" title="输入格式有误！！！请输入正确地址.">
+                                <span class="field-validation-valid" data-valmsg-for="Addressing" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="layui-form-item" style="width:300px;">
+                            <label class="layui-form-label">收件人</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="Addressee" placeholder="请输入收件人" autocomplete="off" class="layui-input" pattern="([^\x00-\xff]|[A-Za-z0-9_])+" title="输入格式有误！！！请输入正确姓名.">
+                            </div>
+                        </div>
+                        <input id="AddressingDetail" name="AddressingDetail" type="hidden" />
+                        <div style="text-align:center;margin-top:20px;">
+                            <button type="submit"  class="layui-btn layui-btn-radius" style="word-spacing: 15px;" onclick="OnAddressingDetail()">保 存</button>
+                        </div>
+                    </form>
+
+                </div>
+                
+            }
+        </div>
+
+        <div style="margin-top:80px;margin-left:-50px;">
+            <table lay-filter="demo" id="demo2" lay-data="{initSort:{field:'id', type:'null'}}">
+                <thead>
+                    <tr>
+                        <th lay-data="{field:'Id',align:'center'}">
+                            地址
+                        </th>
+                        <th lay-data="{field:'I',align:'center'}">
+                            详细地址
+                        </th>
+                        <th lay-data="{field:'q',align:'center'}">
+                            收货人
+                        </th>
+                        <th lay-data="{field:'p',align:'center'}">
+                            状态
+                        </th>
+                        <th lay-data="{field:'p1',align:'center'}">
+                            操作
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.Addressing
+                            </td>
+                            <td>
+                                @item.AddressingDetail
+                            </td>
+                            <td>
+                                @item.Addressee
+                            </td>
+                            <td>
+                                @if (item.IsActive == true)
+                                {
+                                    <span>默认地址 </span>
+                                }
+                                else
+                                {<span>地址 @item.ID </span> }
+
+                            </td>
+                            <td>
+                                @Html.ActionLink("删除", "DeleteAddress", new { id = item.ID }, new { onclick = "return confirm('真的打算删除吗?')", @class = "layui-btn layui-btn-sm" })
+                                                                @if (item.IsActive == true)
+                                {
+                                    <button type="button" class="layui-btn layui-btn-sm layui-btn-disabled">设为默认地址</button>
+                                }
+                                else
+                                {@Html.ActionLink("设为默认地址", "EditIsActive", new { id = item.ID }, new { onclick = "return confirm('真的打算改为默认地址吗?')", @class = "layui-btn layui-btn-sm" }) }
+                                
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        
+
+    </div>
+    <div style="height:15vh;"></div>
+    <!--footer-->
+    <div class="footer">
+        <div class="footer-right">
+            <div class="footer-nav">
+                <a href="#">欢迎光临易购</a>|
+                <a href="#">欢迎光临易购</a>|
+                <a href="#">欢迎光临易购</a>|
+                <a href="#">欢迎光临易购</a>|
+                <a href="#">欢迎光临易购</a>|
+                <a href="#">欢迎光临易购</a>|
+                <a href="#">欢迎光临易购</a>|
+                <a href="#">欢迎光临易购</a>|
+                <a href="#">欢迎光临易购</a>|
+                <a href="#">欢迎光临易购</a>|
+                <a href="#">欢迎光临易购</a>
+            </div>
+            <div class="about-tao">
+                <a href="#">关于易购</a>
+                <a href="#">合作伙伴</a>
+                <a href="#">营销中心</a>
+                <a href="#">廉正举报</a>
+                <a href="#">联系客服</a>
+                <a href="#">开放平台</a>
+                <a href="#">诚征英才</a>
+                <a href="#">联系我们</a>
+                <a href="#">网站地图</a>
+                <a href="#">法律声明</a>
+                <span class="gary-text">&copy; xxxxxxxxx 版权所有</span>
+            </div>
+            <p class="gary-text"><span>网络文化经营许可证：文网文xxxxxxx号</span>|<span>增值电信业务经营许可证：xxxx--xxx--xxxx</span>|<span>信息网络传播视听节目许可证：xxxxxxx号</span></p>
+            <div class="some-info">
+                <img src="~/Content/ESCS/chahua3360/img/some.png" />
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    function OnAddressingDetail() {
+        var province = $("#province").val();
+        var city = $("#city").val();
+        var area = $("#area").val();
+        var addressingDetail =province+"/"+city+"/"+area;
+        $("#AddressingDetail").val(addressingDetail);
+
+    }
+</script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+
+    layui.use('table', function () {
+        var table = layui.table;
+
+        //转换静态表格demo2*************************
+        table.init('demo', {
+            elem: '#demo2'
+            , limit: Number.POSITIVE_INFINITY //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致(Number.POSITIVE_INFINITY 正无穷大)
+            , page: false
+            , width: 1200
+        })
+    });
+
+
+
+</script>

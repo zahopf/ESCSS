@@ -1,0 +1,108 @@
+﻿@model IList<ESCS.Domain.SalesOrder>
+@{
+    ViewBag.Title = "AllSalesOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h4>用户订单信息</h4>
+<hr />
+<br />
+@using (Html.BeginForm())
+{
+    <div class="layui-inline">
+        <label class="layui-form-label">搜索选择框</label>
+        <div class="layui-input-inline">
+            <select name="remarks" lay-verify="required" lay-search="">
+                <option value="">全部</option>
+                <option value="1">layer</option>
+                <option value="2">form</option>
+                <option value="3">layim</option>
+            </select>
+        </div>
+    </div>
+    <button class="layui-btn" data-type="reload" type="submit">搜索</button>
+}
+<div>
+    <table lay-filter="demo" id="demo1" lay-data="{initSort:{field:'id', type:'null'}}">
+        <thead>
+            <tr>
+                <th lay-data="{field:'Id',align:'center',totalRowText:'合计'}">
+                    序号
+                </th>
+                <th lay-data="{field:'q',align:'center'}">
+                    客户
+                </th>
+                <th lay-data="{field:'m',align:'center'}">
+                    送货员
+                </th>
+                <th lay-data="{field:'a',align:'center'}">
+                    下单时间
+                </th>
+                <th lay-data="{field:'s',align:'center'}">
+                    数量
+                </th>
+                <th lay-data="{field:'d',align:'center',totalRow:true}">
+                    金额
+                </th>
+                <th lay-data="{field:'dd',align:'center',totalRow:true}">
+                    利润
+                </th>
+                <th lay-data="{field:'f',align:'center'}">
+                    状态
+                </th>
+
+                <th lay-data="{field:'h',align:'center'}">
+                    备注
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerId.CustomerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserId.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Time)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Money)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Profits)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Remarks)
+                    </td>
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<div style="padding-left:45%;margin-top:50px;margin-left:60px;">
+    <a href="~/Customer/Index"><button type="button" class="layui-btn layui-btn-radius">返回</button></a>
+
+</div>

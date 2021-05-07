@@ -1,0 +1,122 @@
+﻿@model IEnumerable<ESCS.Domain.SalesOrder>
+
+@{
+    Layout = "~/Views/Shared/_LayoutEscs.cshtml";
+}
+
+    <script>
+        function myFunction(obj) {
+
+            $.post(
+            "/EasyShoppingCentre/Return",
+            { id: obj.id },
+            function (data, textStatus) {
+                if (textStatus == "success") {
+                    alert(data);
+                }
+                else { alert(textStatus) }
+            })
+    }
+</script>
+<div style=" height:23vh;width:100vw;">
+        <div style="height: 8vh; width: 15vh; background-color: #ffffff; float:left;margin:5vh 0 0 25vw;border-radius:40%;text-align:center;font-size:35px;font-weight:600;color:#ff6a00;">
+            <p>易购</p>
+            <p style="font-size:25px;">YI GOU</p>
+        </div>
+    <div class="search-box" style="margin:6vh 10vw 0 0; float:right">
+        <div data-toggle="arrowdown" id="arrow8" class="search-toggle">
+            宝贝
+        </div>
+        <input class="search-in" type="text" name="goodsName" placeholder="    搜‘健康椅’试试，办公好选择">
+        <input type="button" class="search-but" value="搜索" style="width:95px;">
+
+    </div>
+</div>
+
+    <div style="margin:0px 400px 0 400px;">
+        <table lay-filter="demo" id="demo1" lay-data="{initSort:{field:'id', type:'null'}}">
+            <thead>
+                <tr>
+                    <th lay-data="{field:'RoleName', width:200,align:'center'}">
+                        @Html.DisplayNameFor(model => model.Time)
+                    </th>
+                    <th lay-data="{field:'2', width:100,align:'center'}">
+                        数量
+                    </th>
+                    <th lay-data="{field:'3', width:100,align:'center'}">
+                        @Html.DisplayNameFor(model => model.Money)
+                    </th>
+                    <th lay-data="{field:'4', width:100,align:'center'}">
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                    <th lay-data="{field:'7', width:100,align:'center'}">
+                        @Html.DisplayNameFor(model => model.Remarks)
+                    </th>
+                    <th lay-data="{field:'d', width:100,align:'center'}">
+                        收件人
+                    </th>
+                    <th lay-data="{field:'df', width:200,align:'center'}">
+                        收件地址
+                    </th>
+                    <th lay-data="{field:'6e',align:'center'}">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Time)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Money)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Remarks)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Addressee)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Addressing)
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("详情", "Xq", new { id = item.ID })
+                            @if (item.Status == "货已送到")
+                            {
+                                @Html.ActionLink("确认收货", "Detailss", new { id = item.ID })
+                            }
+                            else
+                            {
+                                <button type="button" class="layui-btn layui-btn-xs layui-btn-disabled">确认收货</button>
+                            }
+                            @if (item.Status == "完成")
+                            {
+                                <button type="button" id=@item.ID  onclick="myFunction(this)">退货</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="layui-btn layui-btn-xs layui-btn-disabled">退货</button>
+                            }
+                            @if (item.Status == "已付款")
+                            {
+                                @Html.ActionLink("取消订单", "Deletes", new { id = item.ID })
+                            }
+                            else
+                            {
+                                <button type="button" class="layui-btn layui-btn-xs layui-btn-disabled">取消订单</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+<div style="height:20vh;"></div>

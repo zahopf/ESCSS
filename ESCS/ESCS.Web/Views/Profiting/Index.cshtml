@@ -1,0 +1,113 @@
+﻿@model IList<ESCS.Domain.SalesOrder>
+
+@{
+    ViewBag.Title = "盈利情况";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h4>盈利查看</h4>
+<hr />
+
+<link href="~/Content/JQuery/jquery.datetimepicker.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Content/JQuery/jquery.datetimepicker.full.js"></script>
+
+
+<div style="position: absolute; left: 50%; top:320px; transform: translate(-50%,-50%); width: 55%; height: auto;  padding: 20px 70px 30px 0; position: relative;">
+    <div style="margin-bottom:30px;">
+        @using (Html.BeginForm())
+        {
+            <p style="font-size:25px;font-weight:300;">
+                起止时间:
+                <input type="datetime-local" style="height:28px;width:200px;" placeholder="YYYY/MM/DD" name="lotime" value=@ViewBag.Lvalue />--<input type="datetime-local" placeholder="YYYY/MM/DD" style="height:28px;width:200px;" type="text" name="hitime" value=@ViewBag.Hvalue />
+                <script>$('.some_class').datetimepicker();</script>
+                &nbsp;<input type="submit" value="查询" class="layui-btn" />
+            </p>
+        }
+        <br />
+        <br />
+        <br />
+        <fieldset>
+
+            <legend style="font-size:20px;font-weight:500;"> 查询情况</legend>
+
+            <table lay-filter="demo3" id="demo3" lay-data="{initSort:{field:'id', type:'null'}}">
+                <thead>
+                    <tr>
+                        <th lay-data="{field:'Id1',align:'center'}">
+                            时段收入
+                        </th>
+                        <th lay-data="{field:'q11',align:'center'}">
+                            时段盈利
+                        </th>
+                        <th lay-data="{field:'q21',align:'center'}">
+                            时段利率
+                        </th>
+                        <th lay-data="{field:'q31',align:'center'}">
+                            时段单数
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @ViewBag.A 元
+                        </td>
+
+                        <td>
+                            @ViewBag.F 元
+                        </td>
+                        <td>@ViewBag.G</td>
+                        <td>@ViewBag.H</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </fieldset>
+
+        <br />
+        <br />
+        <br />
+        <fieldset>
+            <legend style="font-size:20px;font-weight:500;">总情况</legend>
+
+            <table lay-filter="demo4" id="demo4" lay-data="{initSort:{field:'id', type:'null'}}">
+                <thead>
+                    <tr>
+                        <th lay-data="{field:'Id',align:'center'}">
+                            时间
+                        </th>
+                        <th lay-data="{field:'q1',align:'center'}">
+                            总收入
+                        </th>
+                        <th lay-data="{field:'q2',align:'center'}">
+                            总盈利
+                        </th>
+                        <th lay-data="{field:'q3',align:'center'}">
+                            利率
+                        </th>
+                        <th lay-data="{field:'q',align:'center'}">
+                            单数
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @ViewBag.first -- @ViewBag.last
+                        </td>
+
+                        <td>
+                            @ViewBag.B 元
+                        </td>
+                        <td>@ViewBag.C 元</td>
+                        <td>@ViewBag.D</td>
+                        <td>
+                            @ViewBag.E
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+</div>

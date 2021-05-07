@@ -1,0 +1,119 @@
+﻿@model IList<ESCS.Domain.Goods>
+
+@{
+    ViewBag.Title = "用户管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/layui-v2.5.7/layui/layui.js"></script>
+<h4>商品管理</h4>
+<hr />
+<div>
+    <a href="/Goods/Create">
+        <button type="button" class="layui-btn">
+            <i class="layui-icon">&#xe608;</i> 添加
+        </button>
+    </a>
+</div>
+<br />
+<div class="demoTable">
+    @using (Html.BeginForm())
+    {
+        <span>商品名: </span>
+        <div class="layui-inline">
+            <input class="layui-input" name="goodsName" id="demoReload" autocomplete="off">
+        </div>
+        <button class="layui-btn" data-type="reload" type="submit">搜索</button>
+    }
+</div>
+<br />
+<div>
+    <table lay-filter="demo" id="demo1" lay-data="{initSort:{field:'id', type:'null'}}">
+        <thead>
+            <tr>
+                <th lay-data="{field:'RoleName',align:'center',width:150}">
+                    商品名
+                </th>
+                <th lay-data="{field:'IsActive',align:'center',width:100}">
+                    激活
+                </th>
+                <th lay-data="{field:'d',align:'center',width:100}">
+                    折扣
+                </th>
+                <th lay-data="{field:'SysFunctionList',align:'center',width:100}">
+                    进价
+                </th>
+                <th lay-data="{field:'n',align:'center',width:100}">
+                    售价
+                </th>
+                <th lay-data="{field:'stock',align:'center',width:200}">
+                    库存
+                </th>
+                <th lay-data="{field:'kind',align:'center',width:100}">
+                    种类
+                </th>
+                <th lay-data="{field:'status',align:'center',width:100}">
+                    状态
+                </th>
+                <th lay-data="{field:'q',align:'center'}">
+                    操作
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GoodsName)
+                        </td>
+                        <td>
+                            @if (item.IsActive)
+                            {<p>√</p>}
+                            else
+                            {<p>×</p>}
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Discount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.InnPrice)
+                        </td>
+                        
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OutPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Stock)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GoodsKindId.KindName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            <div class="layui-btn-group">
+                                @if (item.IsActive)
+                                {
+                                    @Html.ActionLink("注销", "SwitchStatus", new { id = item.ID }, new { onclick = "return confirm('你要注销吗?')", @class = "layui-btn" })
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("激活", "SwitchStatus", new { id = item.ID }, new { onclick = "return confirm('真的打算激活吗?')", @class = "layui-btn" });
+                                }
+                                @Html.ActionLink("修改", "Edit", new { id = item.ID }, new { @class = "layui-btn" })
+                                @Html.ActionLink("删除", "Delete", new { id = item.ID }, new { onclick = "return confirm('真的打算删除吗?')", @class = "layui-btn" })
+                            </div>
+                        </td>
+                    </tr>
+                }
+        </tbody>
+    </table>
+
+</div>
+
+

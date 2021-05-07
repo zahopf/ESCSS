@@ -1,0 +1,405 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/Content/dz.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/layui-v2.5.7/layui/layui.js"></script>
+    <script src="~/Content/ddzz.js"></script>
+
+    <link href="~/Content/ESCS/chahua3360/css/reset.css" rel="stylesheet" />
+    <link href="~/Content/ESCS/chahua3360/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/ESCS/chahua3360/css/style.css" rel="stylesheet" />
+    @*<script>
+        $(document).ready(function () {
+            //调整显示页面内容区域的大小
+            var screenHeight = document.documentElement.clientHeight; //获取浏览器可显示内容的高度
+            var i = document.getElementById("footer").scrollHeight;
+            var height = document.getElementById("footer").offsetHeight + document.getElementById("topp").offsetHeight + document.getElementById("bb").offsetHeight;
+            if (height < screenHeight) {
+                $("#bb").css("height", screenHeight - document.getElementById("topp").offsetHeight - document.getElementById("bb").offsetHeight);
+                //$("#cc").css("top", screenHeight - document.getElementById("aa").offsetHeight+260);
+                //document.getElementById("big").style.height = screenHeight - 80;
+            }
+        })
+    </script>*@
+    <style>
+        span {
+            color: #971f1f;
+            font-size: 18px;
+        }
+    </style>
+</head>
+    <body>
+        <!--scroll-head-->
+        <div class="scroll-head"></div>
+        <!--topp-->
+        <div class="top-wrapper" id="topp">
+            <div class="top-info">
+                <div class="top-left">
+                    <!--个人信息-->
+                   
+                    @if (ViewBag.pd == 1)
+                    { 
+                        <div data-toggle="arrowdown" id="arrow1" class="user-name">
+                            <a style="color:#ff4100;" href="#">欢迎，@ViewBag.name</a>
+                            <span class="down-icon"></span>
+                        </div>
+                        <div data-toggle="arrowdown"  class="user-name">
+                            <a style="color:black;" href="~/Customer/CustomerLogin">注销</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div data-toggle="arrowdown" class="user-name">
+                            <a style="color:#ff4100;" href="~/Customer/CustomerLogin">亲,请登录</a>
+                        </div>
+                        <div data-toggle="arrowdown" class="user-name">
+                            <a  href="~/EasyShoppingCentre/Create">免费注册</a>
+                        </div>
+                    }
+                    <div data-toggle="arrowdown" class="user-name">
+                        <a style="color:#ff4100;" href="~/EasyShoppingCentre/YiGouShangCheng">易购首页</a>
+                    </div>
+                    
+                    <div data-toggle="hidden-box" id="nav-box1" class="my-taobao-box">
+                        <ul>
+                            <a href="~/EasyShoppingCentre/Salesorder"><li>已买到的宝贝</li></a>
+                            
+                            <a href="~/EasyShoppingCentre/EditAddress"><li>地址管理</li></a>
+                            <a href="~/EasyShoppingCentre/ChangePassword"><li>安全管理</li></a>
+                            <a href="~/EasyShoppingCentre/EditloginUser"><li>个人资料</li></a>
+                        </ul>
+
+                    </div>
+                </div>
+
+                <!--top-right-->
+                <div class="top-right">
+                    
+                    <div data-toggle="arrowdown" id="arrow3" class="user-name">
+                        <a href="#">我的易购</a>
+                        <span class="down-icon"></span>
+                    </div>
+                    <div data-toggle="arrowdown" id="arrow4" class="user-name">
+                        <i class="fa fa-shopping-cart fa-orange"></i>
+                        <a href="~/EasyShoppingCentre/Shoppingcart">购物车</a>
+                    </div>
+                    <div data-toggle="arrowdown" id="arrow7" class="user-name">
+                        <i class="fa fa-list-ul fa-orange"></i>
+                        <a href="#">网站导航</a>
+                        <span class="down-icon"></span>
+                    </div>
+                    <!--hidden-box-->
+                    
+                    <div data-toggle="hidden-box" id="nav-box3" class="my-taobao-box">
+                        <ul>
+                            <a href="~/EasyShoppingCentre/Salesorder"><li>已买到的宝贝</li></a>
+
+                            <a href="/EasyShoppingCentre/EditAddress"><li>地址管理</li></a>
+                            <a href="/EasyShoppingCentre/ChangePassword"><li>安全管理</li></a>
+                            <a href="~/EasyShoppingCentre/EditloginUser"><li>个人资料</li></a>
+                        </ul>
+                    </div>
+                    <div data-toggle="hidden-box" id="nav-box7" class="nav-box">
+                        <div class="sub-nav top-sub-nav">
+                            <!--<input type="button" class="more-btn" value="更多"/>-->
+                            <!--sub-nav-cell-->
+                            <div class="sub-nav-cell right-shadow">
+                                <h3 class="orange">主题市场</h3>
+                                <ul class="sub-nav-box">
+                                    <li><a href="#">爱美女人</a></li>
+                                    <li><a href="#">品质男人</a></li>
+                                    <li><a href="#">淘宝二手</a></li>
+                                    <li><a href="#">全球购</a></li>
+                                    <li><a href="#">品牌街</a></li>
+                                    <li><a href="#">汽车生活</a></li>
+                                    <li><a href="#">花嫁新娘</a></li>
+                                    <li><a href="#">孕婴童</a></li>
+                                    <li><a href="#">同城便民</a></li>
+                                    <li><a href="#">爱么装</a></li>
+                                    <li><a href="#">运动户外</a></li>
+                                    <li><a href="#">家用电器</a></li>
+                                    <li><a href="#">狠爱</a></li>
+                                    <li><a href="#">网络游戏</a></li>
+                                    <li><a href="#">潮流设计</a></li>
+                                    <li><a href="#">淘宝星愿</a></li>
+                                </ul>
+                            </div>
+                            <div class="sub-nav-cell right-shadow">
+                                <h3 class="green-sp">特色购物</h3>
+                                <ul class="sub-nav-box sp">
+                                    <li><a href="#">爱美女人</a></li>
+                                    <li><a href="#">品质男人</a></li>
+                                    <li><a href="#">淘宝二手</a></li>
+                                    <li><a href="#">全球购</a></li>
+                                    <li><a href="#">品牌街</a></li>
+                                    <li><a href="#">汽车生活</a></li>
+                                    <li><a href="#">花嫁新娘</a></li>
+                                    <li><a href="#">孕婴童</a></li>
+                                    <li><a href="#">同城便民</a></li>
+                                    <li><a href="#">爱么装</a></li>
+                                    <li><a href="#">运动户外</a></li>
+                                    <li><a href="#">家用电器</a></li>
+                                    <li><a href="#">狠爱</a></li>
+                                    <li><a href="#">网络游戏</a></li>
+                                    <li><a href="#">潮流设计</a></li>
+                                    <li><a href="#">淘宝星愿</a></li>
+
+                                </ul>
+                            </div>
+                            <div class="sub-nav-cell right-shadow">
+                                <h3 class="red-now">当前热点</h3>
+                                <ul class="sub-nav-box now">
+                                    <li><a href="#">爱美女人</a></li>
+                                    <li><a href="#">品质男人</a></li>
+                                    <li><a href="#">淘宝二手</a></li>
+                                    <li><a href="#">全球购</a></li>
+                                    <li><a href="#">品牌街</a></li>
+                                    <li><a href="#">汽车生活</a></li>
+                                    <li><a href="#">花嫁新娘</a></li>
+                                    <li><a href="#">孕婴童</a></li>
+                                    <li><a href="#">同城便民</a></li>
+                                    <li><a href="#">爱么装</a></li>
+                                    <li><a href="#">运动户外</a></li>
+                                    <li><a href="#">家用电器</a></li>
+                                    <li><a href="#">狠爱</a></li>
+                                    <li><a href="#">网络游戏</a></li>
+                                    <li><a href="#">潮流设计</a></li>
+                                    <li><a href="#">淘宝星愿</a></li>
+
+                                </ul>
+                            </div>
+                            <div class="sub-nav-cell">
+                                <h3 class="blue-more">更多精彩</h3>
+                                <ul class="sub-nav-box more">
+                                    <li><a href="#">爱美女人</a></li>
+                                    <li><a href="#">品质男人</a></li>
+                                    <li><a href="#">淘宝二手</a></li>
+                                    <li><a href="#">全球购</a></li>
+                                    <li><a href="#">品牌街</a></li>
+                                    <li><a href="#">汽车生活</a></li>
+                                    <li><a href="#">花嫁新娘</a></li>
+                                    <li><a href="#">孕婴童</a></li>
+                                    <li><a href="#">同城便民</a></li>
+                                    <li><a href="#">爱么装</a></li>
+                                    <li><a href="#">运动户外</a></li>
+                                    <li><a href="#">家用电器</a></li>
+                                    <li><a href="#">狠爱</a></li>
+                                    <li><a href="#">网络游戏</a></li>
+                                    <li><a href="#">潮流设计</a></li>
+                                    <li><a href="#">淘宝星愿</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--scroll-top-->
+            <div class="scroll-search">
+                <div class="search-litter">
+                    <img class="scroll-logo" src="" />
+                    <!--scroll-search-->
+                    <div class="search-wrapper-scroll">
+                        <div class="search-box-scroll">
+                            @using (Html.BeginForm())
+                            {
+                                <div data-toggle="arrowdown" id="arrow9" class="search-toggle-scroll">
+                                    宝贝
+                                </div>
+                                <input class="search-in-scroll" name="goodsName" type="text" placeholder="    搜‘健康椅’试试，办公好选择!!!" />
+
+                                <input type="submit" class="search-but-scroll" value="搜索" style="width:95px;">
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        @*中间部分*@
+        <div id="bb" >
+            <!-- 内容主体区域 -->
+            @RenderBody()
+        </div>
+
+        @*底部分*@
+        
+        <!--footer-->
+        <div class="footer">
+            <div class="footer-right">
+                <div class="footer-nav">
+                    <a href="#">欢迎光临易购</a>|
+                    <a href="#">欢迎光临易购</a>|
+                    <a href="#">欢迎光临易购</a>|
+                    <a href="#">欢迎光临易购</a>|
+                    <a href="#">欢迎光临易购</a>|
+                    <a href="#">欢迎光临易购</a>|
+                    <a href="#">欢迎光临易购</a>|
+                    <a href="#">欢迎光临易购</a>|
+                    <a href="#">欢迎光临易购</a>|
+                    <a href="#">欢迎光临易购</a>|
+                    <a href="#">欢迎光临易购</a>
+                </div>
+                <div class="about-tao">
+                    <a href="#">关于易购</a>
+                    <a href="#">合作伙伴</a>
+                    <a href="#">营销中心</a>
+                    <a href="#">廉正举报</a>
+                    <a href="#">联系客服</a>
+                    <a href="#">开放平台</a>
+                    <a href="#">诚征英才</a>
+                    <a href="#">联系我们</a>
+                    <a href="#">网站地图</a>
+                    <a href="#">法律声明</a>
+                    <span class="gary-text">&copy; xxxxxxxxx 版权所有</span>
+                </div>
+                <p class="gary-text"><span>网络文化经营许可证：文网文xxxxxxx号</span>|<span>增值电信业务经营许可证：xxxx--xxx--xxxx</span>|<span>信息网络传播视听节目许可证：xxxxxxx号</span></p>
+                <div class="some-info">
+                    <img src="~/Content/ESCS/chahua3360/img/some.png" />
+                </div>
+            </div>
+        </div>
+
+        <!--backtoTop1-->
+        <!--兼容所有现代浏览器同时包括 ie6/7/8/9 （ie6会有一点点抖动）-->
+        <div class="backtoTop" id="backToTop1">
+            <div id="backToTop-up" class="up-back"><i class="fa fa-angle-up"></i></div>
+            <div id="backToTop-down" class="down-back"><i class="fa fa-angle-down"></i></div>
+        </div>
+
+
+        <script src="~/Content/ESCS/chahua3360/js/jquery_1.9.js"></script>
+        <script src="~/Content/ESCS/chahua3360/js/main.js"></script>
+        <script src="~/Content/ESCS/chahua3360/js/img-show.js"></script>
+        <div style="display:none">
+            <script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script>
+        </div>
+    </body>
+</html>
+<script src="~/layui-v2.5.7/layui/layui.js"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+
+    //时间选择器*********************************
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#test12'
+    , format: 'yyyy/MM/dd'
+        });
+    });
+
+    layui.use('form', function () {
+        var form = layui.form;
+
+        //各种基于事件的操作，下面会有进一步介绍
+    });
+
+    
+
+    layui.use('table', function () {
+        var table = layui.table;
+
+        //转换静态表格demo2*************************
+        table.init('demo', {
+            elem: '#demo2'
+            , limit: Number.POSITIVE_INFINITY //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致(Number.POSITIVE_INFINITY 正无穷大)
+            , page: false
+            , width: 1200
+            , size: 'lg'
+        });
+
+        //转换静态表格demo1*************************
+        table.init('demo', {
+            elem: '#demo1'
+            , limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致
+            , page: true
+             , width: 1200
+            , size: 'lg'
+            //    ,initSort: {
+            //    field: 'id' //排序字段，对应 cols 设定的各字段名
+            //    ,type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            //}
+
+            //支持所有基础参数
+        });
+
+        //转换静态表格demo2*************************
+        table.init('demo2', {
+            elem: '#demo2'
+            , limit: Number.POSITIVE_INFINITY //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致(Number.POSITIVE_INFINITY 正无穷大)
+            , page: false
+            , width: 1200
+        });
+    });
+
+
+    
+
+
+    //图片上传*************************
+    layui.use('upload', function () {
+        var $ = layui.jquery, upload = layui.upload;
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#test2',
+            url: '@Url.Action("Upload", "Default1")'
+              , before: function (obj) {
+                  //预读本地文件示例，不支持ie8
+                  obj.preview(function (index, file, result) {
+                      $('#demo1').attr('src', result); //图片链接（base64）
+                  });
+              }
+              , done: function (res) {
+                  //如果上传失败
+                  if (res.code > 0) {
+                      return layer.msg('上传失败');
+                  }
+                  //上传成功
+                  return layer.msg("上传成功");
+              }
+              , error: function () {
+                  //演示失败状态，并实现重传
+                  var demoText = $('#demoText');
+                  demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                  demoText.find('.demo-reload').on('click', function () {
+                      uploadInst.upload();
+                  });
+              }
+        });
+    });
+</script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+
+    layui.use('carousel', function () {
+        var carousel = layui.carousel;
+        //建造实例
+        carousel.render({
+            elem: '#test1'
+          , width: '100%' //设置容器宽度
+          , arrow: 'always' //始终显示箭头
+            , height: '600'
+            //,anim: 'updown' //切换动画方式
+        });
+    });
+</script>
+

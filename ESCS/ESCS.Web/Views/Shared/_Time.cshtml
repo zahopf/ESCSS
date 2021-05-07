@@ -1,0 +1,60 @@
+﻿
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <link href="~/Contents/Time/Time.css" rel="stylesheet" />
+</head>
+
+<body>
+    @*<div id="aa">
+        <img id="shizhen" src="~/Contents/Time/shizhen.png" />
+        <img id="fenzhen" src="~/Contents/Time/fenzhen.png" />
+        <img id="miaozhen" src="~/Contents/Time/miaozhen.png" />
+    </div>*@
+    <div id="aaa">
+        <p id="a11"></p>
+        <p id="a22"></p>
+        <p id="a33"></p>
+    </div>
+    <script>
+        function timeGo1() {
+            var time = new Date();
+            var hour = time.getHours();
+            var minute = time.getMinutes();
+            var second = time.getSeconds();
+            document.getElementById("shizhen").style.transform = "rotate(" + hour * 30 + 0.5 * minute + "deg)";
+            document.getElementById("fenzhen").style.transform = "rotate(" + minute * 6 + "deg)";
+            document.getElementById("miaozhen").style.transform = "rotate(" + second * 6 + "deg)";
+        }
+        var myset = setInterval(function () { timeGo1(); }, 1000);
+        function timeGo() {
+            var mytime = new Date();
+            var year = mytime.getFullYear();
+            var month = mytime.getMonth() + 1;
+            var date = mytime.getDate();
+            var day = mytime.getDay();
+            var hour = mytime.getHours();
+            var minute = mytime.getMinutes();
+            var second = mytime.getSeconds();
+            var arr = ["日", "一", "二", "三", "四", "五", "六"];
+            day = arr[day];
+            month = (month < 10) ? ("0" + month) : month;
+            date = (date < 10) ? ("0" + date) : date;
+            second = (second < 10) ? ("0" + second) : second;
+            hour = (hour < 10) ? ("0" + hour) : hour;
+            minute = (minute < 10) ? ("0" + minute) : minute;
+            var bb = year + "年" + month + "月" + date + "日";
+            var cc = "星期" + day;
+            var dd = hour + ":" + minute + ":" + second
+            document.getElementById("a11").innerHTML = bb;
+            document.getElementById("a22").innerHTML = cc;
+            document.getElementById("a33").innerHTML = dd;
+
+        }
+        var myset = setInterval(function () { timeGo(); }, 1000);
+    </script>
+</body>
+</html>
+

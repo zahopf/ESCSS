@@ -1,0 +1,113 @@
+﻿@model IList<ESCS.Domain.GoodsKind>
+
+@{
+    ViewBag.Title = "用户管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/Modal/jquery.simplemodal.js"></script>
+<script src="~/Scripts/Modal/basic.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/layui-v2.5.7/layui/layui.js"></script>
+<style>
+    .alert-success {
+        background-color: #3c7aa4;
+    }
+
+</style>
+<script>
+    function open_win() {
+        window.open("@Url.Content("~/GoodsKind/Create")", '', "height = 300, width = 400,resizable=0,top=350,left=600,location=no");
+    }
+    //修改种类名
+    function myFunction(obj) {
+        var id = obj.id; 
+        $.get(
+            "/GoodsKind/Edit",
+            { id: id },
+            function (data, textStatus) {
+                if (textStatus == "success")
+                {
+                    var txt;
+                    var person = prompt("请输入名字：", data);
+                    if (person != null && person != "") {
+                        $.post(
+                         "/GoodsKind/Edit",
+                         { id: id, name: person },
+                         function (data1, textStatus1) {
+                             if (textStatus1 == "success") {
+                                 
+                                 $('#alert').html(data1).addClass('alert-success').fadeIn(1000).fadeOut(2000);
+                                 setTimeout(function(){ window.location = "@Url.Content("~/GoodsKind/Index")"},3000);
+                                 
+                             }
+                             else { alert(textStatus1) }
+                         }
+
+                         )
+                    }
+                    else { $('#alert').html('修改失败！！！').addClass('alert-success').fadeIn(1000).fadeOut(2000); }
+                }
+                else
+                { alert(textStatus) }
+            })
+
+    }
+</script>
+<h4>商品种类管理</h4>
+<hr />
+<div>
+        <button type="button" class="layui-btn" onclick="open_win()">
+            <i class="layui-icon">&#xe608;</i> 添加
+        </button>
+
+</div>
+<br />
+<div class="demoTable">
+    @using (Html.BeginForm())
+    {
+        <span>种类名: </span>
+        <div class="layui-inline">
+            <input class="layui-input" name="kindName" id="demoReload" autocomplete="off">
+        </div>
+        <button class="layui-btn" data-type="reload" type="submit">搜索</button>
+    }
+</div>
+<div>
+    <table lay-filter="demo" id="demo1" lay-data="{initSort:{field:'id', type:'null'}}">
+        <thead>
+            <tr>
+                <th lay-data="{field:'RoleName', width:600,align:'center'}">
+                    种类名
+                </th>
+                <th lay-data="{field:'q',align:'center'}">
+                    操作
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.KindName)
+                        </td>
+                        
+                        <td>
+                            <div class="layui-btn-group">
+                                <a class="layui-btn" id=@item.ID onclick="myFunction(this)">修改</a> 
+                                @Html.ActionLink("二级分类", "Kinds", new { id = item.ID }, new { @class = "layui-btn" })
+                                @Html.ActionLink("删除", "Delete", new { id = item.ID }, new { onclick = "return confirm('真的打算删除吗?')", @class = "layui-btn" })
+                            </div>
+                        </td>
+                    </tr>
+                }
+        </tbody>
+    </table>
+    <div id="alert" style="position: absolute; left: 45%; top: 350px; padding: 10px 10px 10px 10px; display: none; border: 1px solid #3c7aa4; border-radius: 4px;font-size:x-large;font-weight:600; "></div>
+</div>
+
+

@@ -1,0 +1,267 @@
+﻿@using ESCS.Web.Apps
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>易购后台</title>
+    <link href="~/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/Scripts/Common.js"></script>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/Modal/jquery.simplemodal.js"></script>
+    <script src="~/Scripts/Modal/basic.js"></script>
+    <script src="~/Scripts/jquery.min.js"></script>
+
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function () {
+            //页面加载后执行
+            setDivSize(); //调整页面
+            //window.onresize = function () { setDivSize(); };  //屏幕大小改变时调整页面
+            $(window).resize(function () {
+                setDivSize();
+            });
+        });
+
+        //调整显示子页面内容区域的大小
+        function setDivSize() {
+            var screenHeight = getTotalHeight(); //获取浏览器可显示内容的高度
+            var readerDivHeight = screenHeight - 120;
+            $("#aa").css("height", readerDivHeight); //设置左边菜单栏的高度
+        }
+
+
+    </script>
+    <style>
+        span {
+            color: #971f1f;font-size:18px;
+        }
+    </style>
+    
+</head>
+<body class="layui-layout-body" style="background-color:#868c8f;">
+    @*顶部区域*@
+        @Html.Partial("_Header")
+    
+    @*中间部分*@
+    <div class="layui-layout layui-layout-admin" id="aa">
+        <div class="layui-header">
+            <div class="layui-logo"></div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item"><a href="~/User/EditloginUser">首页</a></li>
+                @*<li class="layui-nav-item"><a href="~/Bill/Index">收支管理</a></li>
+                <li class="layui-nav-item"><a href="~/User/EditloginUser">用户</a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">商品管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="~/GoodsKind/Index">分类管理</a></dd>
+                        <dd><a href="~/Goods/Index">商品管理</a></dd>
+                        <dd><a href="">授权管理</a></dd>
+                    </dl>
+                </li>*@
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src="@Url.Content(AppHelper.LoginedUser.Picture)" class="layui-nav-img" />
+                        @AppHelper.LoginedUser.UserName
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/User/EditloginUser">基本资料</a></dd>
+                        <dd><a href="/User/ChangePassword">安全设置</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="/User/Login">注销</a></li>
+            </ul>
+        </div>
+
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+
+                <ul class="layui-nav layui-nav-tree site-demo-nav " lay-filter="test">
+                    //展开class （site-demo-nav）
+                    @{
+                        //获取顶层菜单
+                        //条件父节点为null（Parent == null）且显示状态为可见（IsShow == true）
+
+
+                        var allPrivilegeList = ViewBag.PrivilegeList as IList<ESCS.Domain.SystemFunction>;
+                        var privilegeListParent = allPrivilegeList.Where(m => m.ParentID == null && m.IsShow == true).OrderBy(m => m.Idx).ToList();
+
+                        //循环输出顶层菜单
+                        foreach (ESCS.Domain.SystemFunction function in privilegeListParent)
+                        {
+                        <!-- 顶级菜单 -->
+    <li class="layui-nav-item layui-nav-itemed">
+        @Html.ActionLink(function.SystemFunctionName, function.ActionName, function.ControllerName, new { href = "javascript:;", @class = "javascript:;" })
+        <!-- 二级菜单 -->
+        @if (function.RoleList == null)
+        {
+            //如果无子节点则进入下一次循环
+            continue;
+        }
+        <dl class="layui-nav-child">
+            @*循环输出可见（IsShow == true）的二级节点*@
+            @foreach (ESCS.Domain.SystemFunction item in allPrivilegeList.Where(m => m.IsShow == true && m.ParentID == function).ToList())
+            {
+                <dd class="menuSubRow" style="text-align: center;">
+                    @Html.ActionLink(item.SystemFunctionName, item.ActionName, item.ControllerName)
+                </dd>
+            }
+        </dl>
+    </li>
+                        }
+
+
+}
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body" >
+            <!-- 内容主体区域 -->
+            <div style="padding: 15px;">@RenderBody()</div>
+        </div>
+
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            © Easy Shopping Centre System - 底部固定区域
+        </div>
+    </div>
+    <script src="~/layui-v2.5.7/layui/layui.js"></script>
+    <script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+
+    layui.use('table', function () {
+        var table = layui.table;
+
+
+        //转换静态表格demo1*************************
+        table.init('demo', {
+            elem: '#demo1'
+            , limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致
+            , page: true
+            , size: 'lg'
+            //, skin: 'row ' //行边框风格
+            ,even: true //开启隔行背景
+            //    ,initSort: {
+            //    field: 'id' //排序字段，对应 cols 设定的各字段名
+            //    ,type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            //}
+
+            //支持所有基础参数
+        });
+
+        //转换静态表格demo2*************************
+        table.init('demo', {
+            elem: '#demo2'
+            , limit: Number.POSITIVE_INFINITY //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致(Number.POSITIVE_INFINITY 正无穷大)
+            , page: false
+            , width: 600
+            , size: 'lg'
+        });
+
+
+
+        //转换静态表格demo3*************************
+        table.init('demo3', {
+            elem: '#demo3'
+            , limit: Number.POSITIVE_INFINITY //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致(Number.POSITIVE_INFINITY 正无穷大)
+            , page: false
+            , totalRow: true
+            , size: 'lg'
+        });
+
+        //转换静态表格demo4*************************
+        table.init('demo4', {
+            elem: '#demo4'
+            , limit: Number.POSITIVE_INFINITY //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致(Number.POSITIVE_INFINITY 正无穷大)
+            , page: false
+            , totalRow: true
+            , size: 'lg'
+        });
+
+
+        //表单元素*************************************
+        layui.use('form', function () {
+            var form = layui.form;
+
+            $('#Roleids').on('click', function () {
+                //将页面全部复选框选中的值拼接到一个数组中
+                var arr_box = [];
+                $('input[type=checkbox]:checked').each(function () {
+                    arr_box.push($(this).val());
+                });
+                $("#Roleid").val(arr_box);
+                if ($("#Roleid").val() == null || $("#Roleid").val() == "") {
+                    alert("请选择角色！！！！")
+                }
+                //alert(arr_box)
+
+
+            });
+        });
+
+    });
+
+    //时间选择器*********************************
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            range: '~~',
+            width: 1000,
+            type: 'datetime',//日期时间范围选择
+            elem: '#test16' //指定元素
+        });
+
+        //年月选择器
+        laydate.render({
+            elem: '#test3'
+          , type: 'month'
+            , format: 'yyyy/MM'
+        });
+    });
+
+    //图片上传***************************************
+    layui.use('upload', function () {
+        var $ = layui.jquery
+        , upload = layui.upload;
+
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#test1'
+          , url:'@Url.Action("Upload", "Default1")' //改成您自己的上传接口
+          , before: function (obj) {
+              //预读本地文件示例，不支持ie8
+              obj.preview(function (index, file, result) {
+                  $('#demo1').attr('src', result); //图片链接（base64）
+              });
+          }
+          , done: function (res) {
+              //如果上传失败
+              if (res.code > 0) {
+                  return layer.msg('上传失败');
+              }
+              //上传成功
+              return layer.msg('上传成功');
+          }
+          , error: function () {
+              //演示失败状态，并实现重传
+              var demoText = $('#demoText');
+              demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+              demoText.find('.demo-reload').on('click', function () {
+                  uploadInst.upload();
+              });
+          }
+        });
+    });
+    </script>
+</body>
+</html>
